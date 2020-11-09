@@ -1,0 +1,2 @@
+This is a demo text resource.
+It is can be get ths real path or io stream by servlet context.

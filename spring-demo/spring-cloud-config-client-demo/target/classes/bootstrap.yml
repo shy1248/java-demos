@@ -1,0 +1,36 @@
+###
+# Date        : 2020-10-30 16:38:32
+# Author      : shy
+# Email       : yushuibo@ebupt.com / hengchen2005@gmail.com
+# Version     : v1.0
+# Description : -
+###
+
+spring:
+  profiles:
+    active:
+    - dev
+
+---
+spring:
+  profiles: dev
+  application:
+    name: config-single-client
+  cloud:
+    config:
+      uri:
+      - http://localhost:3301
+      label: main
+      profile: dev
+
+---
+spring:
+  profiles: prod
+  application:
+    name: config-single-client
+  cloud:
+    config:
+      uri:
+      - http://localhost:3301
+      label: main
+      profile: prod

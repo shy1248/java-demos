@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:mvc="http://www.springframework.org/schema/mvc"
+        xmlns:task="http://www.springframework.org/schema/task"
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+            http://www.springframework.org/schema/tx
+            http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+            http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-3.1.xsd
+            http://www.springframework.org/schema/mvc
+            http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+            http://www.springframework.org/schema/task
+            http://www.springframework.org/schema/task/spring-task-3.1.xsd"
+        default-autowire="byName"> <!-- 全局自动注入配置 -->
+
+    <!-- 自动注入还可以分别在每个bean标签中配置，如果既没有配置全局的自动注入，也没有配置单独的自动注入，则表示禁用自动注入。
+         在标签中自动注入的方式为：在bean标签中使用autowire="策略"，注入策略有：
+         byName：根据bean的id与需要注入的类属性名匹配注入（不支持基本类型的成员属性）；
+         byType：根据bean的类型与需要注入的类属性的类型进行匹配（不能有多个类型相同的bean）；
+         constructor：根据构造方法参数的形参名匹配，底层基于byName模式；
+         default：基于全局自动注入的默认方式；
+         no：不自动注入。
+         自动注入优先级相对较高，可能会影响ref的注入！！！
+     -->
+
+
+    <!-- 开启注解扫面，base-package表示要扫面哪些包，多个包使用逗号分隔，可以使用通配符
+     @Component("Bean-Name")：表示为交由spring管理，相当于<bean>标签，Bean-Name默认为类名首字母小写，可以不写
+
+     Controller的注解扫面建议放在springMVC的配置文件中配置，因为springMVC的WebApplicationContext容器是spring
+     ApplicationContext的子类。
+    -->
+    <context:component-scan base-package="me.shy.demo.mvc.*"></context:component-scan>
+    <!-- proxy-target-class为true时表示使用cglib的动态代理实现，为false时表示使用JDK的动态代理技术实现，使用注解时必须开启-->
+    <aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
+
+    <!-- springMVC开启注解驱动，此配置相当于配置如下两个bean：
+         org.springframework.web.servlet.annotation.DefaultAnnotationHandlerMapping
+         org.springframework.web.servlet.annotation.AnnotationMethodHandlerAdapter
+     -->
+    <mvc:annotation-driven></mvc:annotation-driven>
+
+    <!-- springMVC使用配置方式 -->
+    <!-- 配置Controller -->
+    <bean id="demoController" class="me.shy.demo.mvc.controller.DemoController"></bean>
+    <!-- 配置HandlerMapping-->
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <!-- urlMap是一个Map集合，表示哪个url需要哪个controller来处理 -->
+        <property name="urlMap">
+            <map>
+                <!-- url与controller映射 -->
+                <entry key="mvc" value-ref="demoController"></entry>
+            </map>
+        </property>
+    </bean>
+    <!-- 配置HandlerAdapter -->
+    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"></bean>
+    <!-- 自定义视图解析器ViewResolver，默认使用的是forward方式 -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+    <!--&lt;!&ndash; 文件上传 &ndash;&gt;-->
+    <!--<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
+    <!--    <property name="maxUploadSize" value="1000000"></property>-->
+    <!--    <property name="maxInMemorySize" value="100"></property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash; 异常 &ndash;&gt;-->
+    <!--<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">-->
+    <!--    <property name="defaultErrorView">-->
+    <!--        <props>-->
+    <!--            <prop key="java.lang.RuntimeException">/error.jsp</prop>-->
+    <!--        </props>-->
+    <!--    </property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash; 拦截器 &ndash;&gt;-->
+    <!--<mvc:interceptors>-->
+    <!--    &lt;!&ndash; 多个拦截器与这边配置的顺序有关，谁在上边就先进入哪个拦截器，最后出拦截器 &ndash;&gt;-->
+    <!--    &lt;!&ndash;<bean class="me.shy.demo.mvc.intrceptor.DemoInterceptor"></bean>&ndash;&gt;-->
+    <!--    <mvc:interceptor>-->
+    <!--        <mvc:mapping path="/demo"/>-->
+    <!--        <bean class="me.shy.demo.mvc.intrceptor.DemoInterceptor"></bean>-->
+    <!--    </mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
+
+    <!-- 指定静态资源路径，以便排除 -->
+    <mvc:resources mapping="/js/" location="/js/**"></mvc:resources>
+    <mvc:resources mapping="/css/" location="/css/**"></mvc:resources>
+    <mvc:resources mapping="/images/" location="/images/**"></mvc:resources>
+</beans>

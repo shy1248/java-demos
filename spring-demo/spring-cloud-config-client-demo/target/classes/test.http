@@ -1,0 +1,5 @@
+GET http://localhost:8080/show HTTP/1.1
+###
+GET http://localhost:8080/autoRefreshShow HTTP/1.1
+###
+POST http://localhost:8080/refresh HTTP/1.1

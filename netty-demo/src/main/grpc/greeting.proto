@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package me.shy.demo.grpc;
+
+option java_package = "me.shy.demo.netty.rpc.grpc.greetingGen";
+option java_outer_classname = "Greeting";
+option java_multiple_files = true;
+
+// grpc service中的方法参数和返回类型必须是一个已定义的message，因此哪怕只有一个字段也必须定义成一个message
+service GreetingService {
+  // 此处方法名为大写，自动生成代码后会转换为小写
+  rpc SayHello (GreetingRequest) returns (GreetingResponse) {}
+}
+
+message GreetingRequest {
+  string username = 1;
+}
+
+message GreetingResponse {
+  string greetWords = 1;
+}
+

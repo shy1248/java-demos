@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace理解为实现类，必须为全限定类名（包名+类名） -->
+<mapper namespace="me.shy.demo.demomapper.UserMapper">
+    <!-- 开启二级缓存，不同于SQLSession对象的statement缓存，该缓存-->
+    <cache readOnly="true"></cache>
+    <!-- id 为方法名，parameterType 为方法参数名，没有可以不用指定该属性，resultType为返回值类型
+         为SQL游标（cursor）返回一行的类型，如果返回值是List，此处即为List的泛型类型。
+         mybatis通过反射来映射数据库表中的字段与实体类属性，尽量保证实体类与数据库表字段一致，如果不能保证，
+         也要使用SQL别名机制来与实体类属性一致。
+    -->
+    <select id="selectAll" resultType="me.shy.demo.demoomain.User">
+        select * from user
+    </select>
+
+    <select id="count" resultType="Long">
+        select count(*) from user
+    </select>
+    <!-- #{index} 或者 #{param1} 来获取参数，index为参数的索引，从0开始，但是param后边的数字从1开始的；
+         另外，如果只有一个参数，且该参数是基本类型或String时，#{}中的内容可以为任意，只要有内容就行；
+         除了可以用#{}以外，还可以使用${}，#{}表示SQL使用占位符的方式，而${}使用字符串拼接方式，默认会找${}
+         中对象的set/get方法获取属性值，如果是纯数字，则直接在SQL拼接该数字；
+         一般来说，推荐使用#{}方式，多个参数可以使用对象或map，如果是对象且有get/set方法，则用#{属性名}；如果是map，使用#{key}
+    -->
+    <select id="selectById" parameterType="int" resultType="me.shy.demo.demoomain.User">
+        select * from user where id=#{0}
+    </select>
+
+    <!-- 当SQL中<,>以及双引号等特使字符时，需要使用XML的转义格式：<![CDATA[ 实际内容 ]]>-->
+    <select id="getGrownUps" resultType="me.shy.demo.demoomain.User">
+        <!--<![CDATA[ select * from user where age >= 18 ]]>-->
+        select * from user where age >= 18
+    </select>
+
+    <!-- 分页查询，使用map传参，pageStart 必须计算好才传进来，不能在这里进行数学计算 -->
+    <select id="page" parameterType="map" resultType="me.shy.demo.demoomain.User">
+        select * from user limit ${pageStart}, ${pageSize}
+    </select>
+
+    <!-- mybatis底层是对JDBC的封装，JDBC中执行增删改的方法为executeUpdate()方法，该方法返回的是影响的行数，
+         因此，mybatis的insert，update，delete标签中没有resultType属性，默认都是int。
+    -->
+    <insert id="insert" parameterType="User">
+        insert into user(name, age) values(#{name}, #{age})
+    </insert>
+
+    <!-- 动态SQL：根据不同条件形成不同的SQL，mybatis中在mapper.xml中可以添加逻辑判断
+         mybatis的mapper文件中的动态逻辑部分采用OGNL表达式，其中对key或者属性直接引用，
+         不需要任何特殊字符，但是逻辑与、或使用and、or来表示。
+    -->
+    <!-- if标签，做来做条件判断，此处加上1=1是防止where后面直接跟了个and造成语法错误 -->
+    <select id="selectByNameOrAge" resultType="me.shy.demo.demoomain.User">
+        select * from user where 1=1
+        <if test="name != null and name != ''">
+            and name=#{name}
+        </if>
+        <if test="age !=null and age != ''">
+            and age=#{age}
+        </if>
+    </select>
+
+    <!-- where 标签的作用就是SQL中有where条件会自动加上where条件，没有的话就不加。
+         对比上面的直接使用if实现就不用写where 1=1了。
+    -->
+    <select id="selectByIdOrName" resultType="me.shy.demo.demoomain.User">
+        select * from user
+        <where>
+            <if test="id != null and id != ''">
+                and id=#{id}
+            </if>
+            <if test="name !=null and name != ''">
+                and name=#{name}
+            </if>
+        </where>
+    </select>
+
+    <!-- choose when otherwise组合标签相当于if else if else组合，只会执行其中一个 -->
+    <select id="selectWithNameOrAge" parameterType="me.shy.demo.demoomain.User" resultType="me.shy.demo.demoomain.User">
+        select * from user
+        <where>
+            <choose>
+                <when test="id != null and id != ''">
+                    and id=#{id}
+                </when>
+                <when test="name !=null and name != ''">
+                    and name=#{name}
+                </when>
+                <otherwise>
+                    and id=#{id}
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <!-- set标签作用于更新语句，作用是去掉最后一个set语句后面的"，"
+         set后面加固定的id=#{id}是为了防止语法错误
+    -->
+    <update id="update" parameterType="me.shy.demo.demoomain.User">
+        update user
+        <set>
+            id=#{id},
+            <if test="name !=null and name !=''">
+                name=#{name},
+            </if>
+            <if test="age !=null and age !=''">
+                age=#{age},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <!-- trim标签的作用是语句的前后增加或去掉一些内容，顺序为：先去掉，后增加
+         prefix：在语句前边增加内容
+         prefixOverrides：去掉语句前边的内容
+         suffix：在语句后面增加内容
+         suffixOverrides：在语句后面去掉些内容
+         trim可以实现where和set的功能
+         使用trim实现set功能
+    -->
+    <update id="updateNameById" parameterType="me.shy.demo.demoomain.User">
+        update user
+        <trim prefix="set" suffixOverrides=",">
+            name=#{name}
+        </trim>
+        where id=#{id}
+    </update>
+
+    <!-- bind标签的作用是给属性或key重新赋值，比如在模糊查询时，通常要在条件值前后加上
+         %，此时就可以用bind。注意字符串连接方式。
+    -->
+    <select id="searchByName" parameterType="me.shy.demo.demoomain.User" resultType="me.shy.demo.demoomain.User">
+        <bind name="name" value="'%' + name + '%'"/>
+        select * from user where name like #{name}
+    </select>
+
+    <!-- forEach标签是对参数值循环，还能指定语句的开始，结束与分隔符，一般适用于in查询或批量新增场景
+         collection：要循环的参数值
+         item：循环时临时变量
+         open：语句开始前缀
+         close：语句结束后缀
+         separator：循环变量间的分隔符
+         注意：批量新增时，需要使用：factory的openSession(ExecutorType.BATCH)
+    -->
+    <select id="searchById" parameterType="list" resultType="me.shy.demo.demoomain.User">
+        select * from user where id in
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+    <insert id="batchInsert" parameterType="list">
+        insert into user(name, age) values
+        <foreach collection="list" item="user" separator=",">
+            (#{name}, #{age})
+        </foreach>
+    </insert>
+
+    <!-- sql片段定义，在其它任何增删改查中可以用<include refid="mysql"></include>来引用，
+         该功能在多表联合查询时用的很多。如：
+         <select id="demo" resultType="User">
+            select <include refid="mysql"></include> from user
+         </select>
+    -->
+    <sql id="mysql">
+        id, name, age
+    </sql>
+</mapper>

@@ -1,0 +1,22 @@
+###
+# Date        : 2020-10-23 08:19:53
+# Author      : shy
+# Email       : yushuibo@ebupt.com / hengchen2005@gmail.com
+# Version     : v1.0
+# Description : -
+###
+server:
+  port: 8761
+
+eureka:
+  instance:
+    hostname: localhost
+  # 禁止自动 Eureka 的自我保护机制，开发环境禁止，生产环境不能禁止
+  server:
+    enable-self-preservation: false
+  client:
+    # 是否注册 Eureka 服务自身
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka
