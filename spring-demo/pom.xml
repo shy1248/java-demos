@@ -96,6 +96,7 @@
         <module>spring-cloud-config-server-demo</module>
         <module>spring-cloud-config-client-demo</module>
         <module>spring-cloud-ribbon-client-demo</module>
+        <module>spring-cloud-feign-client-demo</module>
     </modules>
     <build>
         <plugins>
