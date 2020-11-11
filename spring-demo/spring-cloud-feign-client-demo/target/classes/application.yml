@@ -14,3 +14,11 @@ eureka:
 spring:
   application:
     name: feign-client
+
+server:
+  port: 8102
+
+# 开启 feign 的 hytrix 支持
+feign:
+  hystrix:
+    enabled: true
