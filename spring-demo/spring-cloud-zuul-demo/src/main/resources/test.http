@@ -1,0 +1,3 @@
+GET http://localhost:8103/api-a/hi?name=shy HTTP/1.1
+###
+GET http://localhost:8103/api-b/hi?name=shy HTTP/1.1
