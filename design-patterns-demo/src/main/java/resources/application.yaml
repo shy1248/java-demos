@@ -1,0 +1,4 @@
+strategies:
+  comparator:
+    - cat: demo.shy.com.strategy.CatWeightComparator
+    - dog: demo.shy.com.strategy.DogWeightComparator

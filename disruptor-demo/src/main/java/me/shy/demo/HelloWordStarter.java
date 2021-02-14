@@ -1,5 +1,9 @@
 package me.shy.demo;
 
+import java.nio.ByteBuffer;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+
 import com.lmax.disruptor.EventFactory;
 import com.lmax.disruptor.EventHandler;
 import com.lmax.disruptor.EventTranslatorOneArg;
@@ -7,9 +11,6 @@ import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.YieldingWaitStrategy;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
-import java.nio.ByteBuffer;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * @Since: 2020/5/10 11:05
@@ -25,7 +26,8 @@ public class HelloWordStarter {
         HelloWordStarter starter = new HelloWordStarter();
 
         // 1.配置并获取 disruptor
-        ExecutorService service = Executors.newCachedThreadPool();
+        // ExecutorService service = Executors.newCachedThreadPool();
+        ThreadFactory threadFactory = Executors.defaultThreadFactory();
         // 2. 创建事件工厂
         LongEventFactory eventFactory = starter.new LongEventFactory();
         // 3. 设置 RingBuffer 大小, 需为2的N次方(能将求模运算转为位运算提高效率 ), 否则影响性能
@@ -43,7 +45,7 @@ public class HelloWordStarter {
         //   BusySpinWaitStrategy 自旋等待，类似自旋锁. 低延迟但同时对CPU资源的占用也多.
 
         Disruptor<LongEvent> disruptor =
-            new Disruptor<LongEvent>(eventFactory, bufferSize, service, ProducerType.SINGLE,
+            new Disruptor<LongEvent>(eventFactory, bufferSize, threadFactory, ProducerType.SINGLE,
                 new YieldingWaitStrategy());
 
         // 5. 注册事件消费处理器，也即消费者。可传入多个消费者，还可以指定消费者的依赖关系
@@ -71,7 +73,7 @@ public class HelloWordStarter {
         // 关闭 disruptor，阻塞直至所有事件都得到处理
         disruptor.shutdown();
         // 需关闭 disruptor 使用的线程池, 上一步 disruptor 关闭时不会连带关闭线程池
-        service.shutdown();
+        // service.shutdown();
     }
 
     // Event 封装要传递的事件（数据）
