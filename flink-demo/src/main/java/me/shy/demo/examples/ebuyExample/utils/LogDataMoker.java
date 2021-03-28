@@ -8,8 +8,6 @@
  */
 package me.shy.demo.examples.ebuyExample.utils;
 
-import java.util.Random;
-
 public class LogDataMoker {
 
 

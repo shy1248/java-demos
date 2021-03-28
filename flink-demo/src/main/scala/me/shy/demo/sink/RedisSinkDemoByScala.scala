@@ -45,7 +45,7 @@ class RedisSink extends RichSinkFunction[String] {
         println("Redis client is shutdown!")
     }
 
-    override def invoke(value: String, context: SinkFunction.Context[_]): Unit = {
+    override def invoke(value: String, context: SinkFunction.Context): Unit = {
         this.syncCommand.lpush("l_words_scala", value.toString)
         println(s"Write value: $value to redis key: l_words_scala...")
     }

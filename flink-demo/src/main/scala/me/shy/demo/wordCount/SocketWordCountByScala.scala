@@ -1,10 +1,3 @@
-package me.shy.demo.wordCount
-
-import org.apache.flink.api.java.utils.ParameterTool
-import org.apache.flink.api.scala._
-import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
-import org.apache.flink.streaming.api.windowing.time.Time
-
 /**
   * @Since: 2019-12-21 22:31:24
   * @Author: shy
@@ -12,6 +5,15 @@ import org.apache.flink.streaming.api.windowing.time.Time
   * @Version: v1.0
   * @Description: -
   */
+
+package me.shy.demo.wordCount
+
+import org.apache.flink.api.java.utils.ParameterTool
+import org.apache.flink.api.scala._
+import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
+import org.apache.flink.streaming.api.windowing.time.Time
+import org.apache.flink.streaming.api.scala.DataStream
+
 object SocketWordCountByScala {
   def main(args: Array[String]): Unit = {
     var host = "localhost"
@@ -27,17 +29,17 @@ object SocketWordCountByScala {
         host = "localhost"
         println("Not all host or port gaven, using default: localhost:9000!")
     }
-    val environment = StreamExecutionEnvironment.getExecutionEnvironment
-    val text = environment.socketTextStream(host, port)
+    val environment: StreamExecutionEnvironment =
+      StreamExecutionEnvironment.getExecutionEnvironment
+    val text: DataStream[String] = environment.socketTextStream(host, port)
     text
       .flatMap(_.split("\\s+"))
       .map((_, 1))
       .setParallelism(1)
       .keyBy(0)
-      .timeWindow(Time.seconds(2), Time.seconds(1))
+      //   .timeWindow(Time.seconds(2), Time.seconds(1))
       .sum(1)
       .print()
     environment.execute("SocketWordCountByScala")
   }
 }
-

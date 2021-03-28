@@ -1,11 +1,12 @@
 package me.shy.demo.partition;
 
-import me.shy.demo.source.CustomSignleDataSource;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.functions.Partitioner;
 import org.apache.flink.api.java.tuple.Tuple1;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+
+import me.shy.demo.source.CustomSignleDataSource;
 
 /**
  * @Since: 2019-12-21 22:31:24
@@ -36,9 +37,11 @@ public class CustomPartition implements Partitioner<String> {
         DataStream<String> data = environment.addSource(new CustomSignleDataSource()).setParallelism(1);
         // 使用自定义分区前需要将数据类型由 String 转换为 Tuple，且必须指定 Tuple的数据类型
         DataStream<Tuple1<String>> dataTuple = data.map(new MapFunction<String, Tuple1<String>>() {
+            private static final long serialVersionUID = -25653726260325105L;
+
             @Override
             public Tuple1<String> map(String value) throws Exception {
-                return new Tuple1(value);
+                return new Tuple1<String>(value);
             }
         });
         // 使用 Tuple DataStream 的 partitionCustom 对流进行分区
