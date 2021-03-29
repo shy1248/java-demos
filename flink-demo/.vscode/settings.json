@@ -1,5 +1,6 @@
 {
     "files.watcherExclude": {
         "**/target": true
-    }
+    },
+    "java.checkstyle.configuration": "/Users/shy/OneDrive/sync/backup/java-formatter/eclipse-java-p3c-formatter.xml"
 }

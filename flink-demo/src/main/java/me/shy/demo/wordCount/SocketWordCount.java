@@ -1,5 +1,14 @@
 package me.shy.demo.wordCount;
 
+import org.apache.flink.api.common.functions.FlatMapFunction;
+import org.apache.flink.api.common.functions.MapFunction;
+import org.apache.flink.api.java.utils.ParameterTool;
+import org.apache.flink.streaming.api.datastream.DataStream;
+import org.apache.flink.streaming.api.datastream.DataStreamSource;
+import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.windowing.time.Time;
+import org.apache.flink.util.Collector;
+
 /**
  * @Since: 2019-12-21 21:34:33
  * @Author: shy
@@ -9,14 +18,6 @@ package me.shy.demo.wordCount;
  */
 
 import lombok.Data;
-import org.apache.flink.api.common.functions.FlatMapFunction;
-import org.apache.flink.api.common.functions.MapFunction;
-import org.apache.flink.api.java.utils.ParameterTool;
-import org.apache.flink.streaming.api.datastream.DataStream;
-import org.apache.flink.streaming.api.datastream.DataStreamSource;
-import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.windowing.time.Time;
-import org.apache.flink.util.Collector;
 
 public class SocketWordCount {
 
@@ -45,9 +46,11 @@ public class SocketWordCount {
         Long maxRetry = 1L;
 
         // get flink enviroment
-        StreamExecutionEnvironment enviroment = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment enviroment =
+                StreamExecutionEnvironment.getExecutionEnvironment();
         // listen data source
-        DataStreamSource<String> lines = enviroment.socketTextStream(hostname, port, delimiter, maxRetry);
+        DataStreamSource<String> lines =
+                enviroment.socketTextStream(hostname, port, delimiter, maxRetry);
         // do operator
         DataStream<WordCount> wordCounts = lines.flatMap(new FlatMapFunction<String, String>() {
             private static final long serialVersionUID = 1L;

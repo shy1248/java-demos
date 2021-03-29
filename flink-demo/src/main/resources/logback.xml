@@ -1,7 +1,8 @@
 <configuration>
 <appender name="Console-Appender" class="ch.qos.logback.core.ConsoleAppender">
+    <withJansi>true</withJansi>
     <encoder>
-        <pattern>%d %-5level [%thread] %logger{0}: %msg%n</pattern>
+        <pattern>[%thread] %highlight(%-5level) %cyan(%logger{15}) - %msg %n</pattern>
     </encoder>
 </appender>
 <appender name="RollingFile-Appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -12,13 +13,13 @@
         <totalSizeCap>1MB</totalSizeCap>
     </rollingPolicy>
     <encoder>
-        <pattern>%d %-5level [%thread] %logger{0}: %msg%n</pattern>
+        <pattern>[%thread] %-5level %logger{15} - %msg %n</pattern>
     </encoder>
 </appender>
 <appender name="Async-Appender" class="ch.qos.logback.classic.AsyncAppender">
     <appender-ref ref="RollingFile-Appender" />
 </appender>
-<root level='error'>
+<root level='info'>
     <appender-ref ref="Console-Appender" />
     <!-- <appender-ref ref="Async-Appender" /> -->
 </root>
