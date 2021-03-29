@@ -5,7 +5,8 @@ import org.apache.flink.api.common.functions.Partitioner;
 import org.apache.flink.api.java.tuple.Tuple1;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import me.shy.demo.source.CustomSignleDataSource;
+
+import me.shy.demo.datasource.CustomSignleDataSource;
 
 /**
  * @Since: 2019-12-21 22:31:24
@@ -30,12 +31,10 @@ public class CustomPartition implements Partitioner<String> {
     private static final long serialVersionUID = 1L;
 
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment environment =
-                StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment environment = StreamExecutionEnvironment.getExecutionEnvironment();
         // 因为分区是根据奇数和偶数进行分区，因此为了看效果，将作业并行度设置为2，默认并行度为 cpu 的核数
         environment.setParallelism(2);
-        DataStream<String> data =
-                environment.addSource(new CustomSignleDataSource()).setParallelism(1);
+        DataStream<String> data = environment.addSource(new CustomSignleDataSource()).setParallelism(1);
         // 使用自定义分区前需要将数据类型由 String 转换为 Tuple，且必须指定 Tuple的数据类型
         DataStream<Tuple1<String>> dataTuple = data.map(new MapFunction<String, Tuple1<String>>() {
             private static final long serialVersionUID = -25653726260325105L;
@@ -47,17 +46,17 @@ public class CustomPartition implements Partitioner<String> {
         });
         // 使用 Tuple DataStream 的 partitionCustom 对流进行分区
         dataTuple.partitionCustom(new CustomPartition(), t -> t.f0)
-                // 输出看效果
-                .map(new MapFunction<Tuple1<String>, String>() {
-                    private static final long serialVersionUID = 1L;
+            // 输出看效果
+            .map(new MapFunction<Tuple1<String>, String>() {
+                private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public String map(Tuple1<String> value) throws Exception {
-                        System.out.println("Current thread is: " + Thread.currentThread().getId()
-                                + ", and the value is: " + value);
-                        return value.getField(0).toString();
-                    }
-                }).print();
+                @Override
+                public String map(Tuple1<String> value) throws Exception {
+                    System.out.println(
+                        "Current thread is: " + Thread.currentThread().getId() + ", and the value is: " + value);
+                    return value.getField(0).toString();
+                }
+            }).print();
 
         environment.execute();
 
@@ -68,6 +67,6 @@ public class CustomPartition implements Partitioner<String> {
     public int partition(String key, int numPartitions) {
         System.out.println("Current partition num is: " + numPartitions);
         Long longKey = Long.parseLong(key);
-        return (int) (longKey % 2);
+        return (int)(longKey % 2);
     }
 }
