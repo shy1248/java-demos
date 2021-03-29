@@ -17,15 +17,19 @@ import org.apache.flink.streaming.api.functions.source.RichParallelSourceFunctio
  * 的方式可以重写父类的 open 与 close 方法，用于资源的打开与释放。
  */
 public class CustomParallelDataSource extends RichParallelSourceFunction<String> {
-
+    private static final long serialVersionUID = -3771550524687177228L;
     private Long count = 0L;
     private boolean isRunning = true;
 
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment environment = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment environment =
+                StreamExecutionEnvironment.getExecutionEnvironment();
         // 此处的并行度可设置为大于1的数
-        DataStream<String> dataStream = environment.addSource(new CustomParallelDataSource()).setParallelism(3);
+        DataStream<String> dataStream =
+                environment.addSource(new CustomParallelDataSource()).setParallelism(3);
         dataStream.map(new MapFunction<String, String>() {
+            private static final long serialVersionUID = -9097641958736881436L;
+
             @Override
             public String map(String value) throws Exception {
                 System.out.println("Recevied data: " + value);
@@ -44,7 +48,7 @@ public class CustomParallelDataSource extends RichParallelSourceFunction<String>
 
     // 产生数据的主要方法，一般是循环产生数据
     @Override
-    public void run(SourceContext ctx) throws Exception {
+    public void run(SourceContext<String> ctx) throws Exception {
         System.out.println("Starting produce data...");
         while (isRunning) {
             ctx.collect(count.toString());

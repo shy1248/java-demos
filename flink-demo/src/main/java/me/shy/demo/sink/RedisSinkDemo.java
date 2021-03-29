@@ -1,12 +1,10 @@
 package me.shy.demo.sink;
 
-import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
-
 import io.lettuce.core.RedisURI;
 import io.lettuce.core.cluster.RedisClusterClient;
 import io.lettuce.core.cluster.api.StatefulRedisClusterConnection;
@@ -25,21 +23,18 @@ import io.lettuce.core.cluster.api.sync.RedisClusterCommands;
 public class RedisSinkDemo {
 
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment environment = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment environment =
+                StreamExecutionEnvironment.getExecutionEnvironment();
         environment.setParallelism(1);
-        DataStreamSource<String> textStream = environment.socketTextStream("demos01.shy.com", 9000);
+        DataStreamSource<String> textStream = environment.socketTextStream("localhost", 9999);
 
-        textStream.map(new MapFunction<String, Tuple2<String, String>>() {
-            @Override
-            public Tuple2<String, String> map(String value) throws Exception {
-                return new Tuple2<>("l_words", value);
-            }
-        }).addSink(new MyRedisSink());
+        textStream.map(value -> new Tuple2<>("l_words", value)).addSink(new MyRedisSink());
 
         environment.execute("RedisSinkDemo");
     }
 
-    public static class MyRedisSink extends RichSinkFunction {
+    public static class MyRedisSink extends RichSinkFunction<Tuple2<String, String>> {
+        private static final long serialVersionUID = -1848960554825750510L;
         private RedisClusterClient client = null;
         private StatefulRedisClusterConnection<String, String> connection = null;
         private RedisClusterCommands<String, String> syncCommand = null;
@@ -74,8 +69,7 @@ public class RedisSinkDemo {
         }
 
         @Override
-        public void invoke(Object value, Context context) throws Exception {
-
+        public void invoke(Tuple2<String, String> value, Context context) throws Exception {
             if (value instanceof Tuple2) {
                 String k = ((Tuple2<String, String>)value).f0;
                 String v = ((Tuple2<String, String>)value).f1;

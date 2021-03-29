@@ -25,9 +25,11 @@ public class CustomSignleDataSource implements SourceFunction<String> {
     private boolean isRunning = true;
 
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment environment = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment environment =
+                StreamExecutionEnvironment.getExecutionEnvironment();
         // 此处的并行度只能设置为1
-        DataStream<String> dataStream = environment.addSource(new CustomSignleDataSource()).setParallelism(1);
+        DataStream<String> dataStream =
+                environment.addSource(new CustomSignleDataSource()).setParallelism(1);
         dataStream.map(new MapFunction<String, String>() {
             private static final long serialVersionUID = 1L;
 
@@ -43,7 +45,7 @@ public class CustomSignleDataSource implements SourceFunction<String> {
 
     // 产生数据的主要方法，一般是循环产生数据
     @Override
-    public void run(SourceContext ctx) throws Exception {
+    public void run(SourceContext<String> ctx) throws Exception {
         while (isRunning) {
             ctx.collect(count.toString());
             count++;

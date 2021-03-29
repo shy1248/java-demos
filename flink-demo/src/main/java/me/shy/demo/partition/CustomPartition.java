@@ -46,7 +46,7 @@ public class CustomPartition implements Partitioner<String> {
             }
         });
         // 使用 Tuple DataStream 的 partitionCustom 对流进行分区
-        dataTuple.partitionCustom(new CustomPartition(), 0)
+        dataTuple.partitionCustom(new CustomPartition(), t -> t.f0)
                 // 输出看效果
                 .map(new MapFunction<Tuple1<String>, String>() {
                     private static final long serialVersionUID = 1L;

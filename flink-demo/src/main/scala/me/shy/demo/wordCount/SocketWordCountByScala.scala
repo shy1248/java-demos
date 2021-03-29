@@ -6,7 +6,7 @@
   * @Description: -
   */
 
-package me.shy.demo.wordCount
+package me.shy.demo.wordcount
 
 import org.apache.flink.api.java.utils.ParameterTool
 import org.apache.flink.api.scala._

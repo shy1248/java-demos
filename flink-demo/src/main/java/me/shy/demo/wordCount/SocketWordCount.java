@@ -1,14 +1,3 @@
-package me.shy.demo.wordCount;
-
-import org.apache.flink.api.common.functions.FlatMapFunction;
-import org.apache.flink.api.common.functions.MapFunction;
-import org.apache.flink.api.java.utils.ParameterTool;
-import org.apache.flink.streaming.api.datastream.DataStream;
-import org.apache.flink.streaming.api.datastream.DataStreamSource;
-import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.windowing.time.Time;
-import org.apache.flink.util.Collector;
-
 /**
  * @Since: 2019-12-21 21:34:33
  * @Author: shy
@@ -17,7 +6,20 @@ import org.apache.flink.util.Collector;
  * @Description: -
  */
 
+package me.shy.demo.wordcount;
+
+import org.apache.flink.api.common.functions.FlatMapFunction;
+import org.apache.flink.api.common.functions.MapFunction;
+import org.apache.flink.api.java.utils.ParameterTool;
+import org.apache.flink.streaming.api.datastream.DataStream;
+import org.apache.flink.streaming.api.datastream.DataStreamSource;
+import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTimeWindows;
+import org.apache.flink.streaming.api.windowing.time.Time;
+import org.apache.flink.util.Collector;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 public class SocketWordCount {
 
@@ -68,7 +70,8 @@ public class SocketWordCount {
             public WordCount map(String value) throws Exception {
                 return new WordCount(value, 1L);
             }
-        }).keyBy("word").timeWindow(Time.seconds(5), Time.seconds(1)).sum("count");
+        }).keyBy(wc -> wc.getWord()).window(TumblingProcessingTimeWindows.of(Time.seconds(5)))
+                .sum("count");
         // data sink, output to console
         wordCounts.print();
         // start execute
@@ -76,28 +79,10 @@ public class SocketWordCount {
     }
 
     @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class WordCount {
-
         private String word;
         private Long count;
-
-        public WordCount() {
-        }
-
-        public WordCount(String word, Long count) {
-            this.word = word;
-            this.count = count;
-        }
-
-        @Override
-        public String toString() {
-            StringBuilder sb = new StringBuilder();
-            sb.append("WordCount[");
-            sb.append(this.word);
-            sb.append(",");
-            sb.append(this.count);
-            sb.append("]");
-            return sb.toString();
-        }
     }
 }
