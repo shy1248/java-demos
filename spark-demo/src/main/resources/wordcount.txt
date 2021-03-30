@@ -1,4 +1,0 @@
-Hello Hadoop
-Hello Storm
-Hello Spark Spark Streaming
-Hello Java

@@ -1,7 +1,0 @@
-1. JDK 的动态代理要求被代理的类必须具有接口；
-2. JDK 的动态代理生成的代理类是被代理类的兄弟类，也即实现相同接口的类；
-3. CGLIB 的动态代理使用的是继承，即生成的代理类是被代理类的子类，
-   因此不要求被代理类必须实现某个接口，但是被 final 关键字修饰的类不能使用 CGLIB 的方式来代理；
-4. 无论是 CGLIB 还是 JDK 自身的动态代理实现，其底层在动态生成代理类的过程中都使用了 ASM（Java 字节码操作库） 库；
-5. Spring 的 AOP（Aspect Oriented Programming，面向切面编程）使用的就是动态代理实现的，默认使用 JDK 的方式实现，
-   如果将注解 @EnableAspectJAutoProxy 的参数 proxyTargetClass 设置为 true ，表示使用 CGLIB 的方式实现；

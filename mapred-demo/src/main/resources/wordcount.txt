@@ -1,6 +1,0 @@
-hello hadoop
-hello spark
-hello storm
-hello word
-hadoop hive
-hadoop pig

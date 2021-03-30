@@ -1,7 +1,0 @@
-GET http://localhost:8080/a HTTP/1.1
-###
-GET http://localhost:8080/b HTTP/1.1
-###
-GET http://localhost:8080/c/shy HTTP/1.1
-###
-GET http://localhost:8080/c/err HTTP/1.1
