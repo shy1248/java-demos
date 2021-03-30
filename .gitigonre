@@ -1,0 +1,17 @@
+*.class
+.DS_Store
+.classpath
+.factorypath
+.project
+.scalafmt.conf
+metals.sbt
+*.iml
+*.pyc
+target/
+.metals/
+.bloop/
+.settings/
+.vscode/
+.bloop/
+.idea/
+.ammonite/

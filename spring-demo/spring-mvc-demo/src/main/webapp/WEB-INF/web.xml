@@ -1,0 +1,41 @@
+<!DOCTYPE web-app PUBLIC
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<!-- springmvc中的四个重要组件：
+     DispatcherServlet：全局请求分发器，不做任何处理只接受请求；
+     HandlerMapping：配置url与其对应的Controller，即url映射；
+     HandlerAdapter：调用Controller来处理请求；
+     ViewResolver：处理请求处理完毕后需要转发或者跳转的视图；
+ -->
+<web-app>
+    <!-- 配置springMVC的入口servlet -->
+    <servlet>
+        <servlet-name>springmvc-demo</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <!-- 配置springmvc配置文件的自定义路径，如果不配置，默认会找WEB-INF/<ServletNName>-servlet.xml作为配置文件 -->
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:springmvc.xml</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <!-- 由springMVC的DispatcherServlet来接管所有的请求 -->
+        <servlet-name>springmvc-demo</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <!-- 字符编码为UTF-8 -->
+    <filter>
+        <filter-name>encoding</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>utf-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>encoding</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+</web-app>

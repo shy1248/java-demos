@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package me.shy.demo.protobuf;
+
+option optimize_for = SPEED;
+option java_package = "me.shy.demo.netty.rpc.protobuf";
+option java_outer_classname = "MultiMessageProto";
+
+message Pet {
+  enum PetType {
+    DogType = 0;
+    CatType = 1;
+  }
+
+  PetType petType = 1;
+  oneof whichPet {
+    Dog dog = 2;
+    Cat cat = 3;
+  }
+}
+
+message Master {
+  string name = 1;
+  int32 age = 2;
+
+  enum Gender {
+    MALE = 0;
+    FEMALE = 1;
+  }
+}
+
+message Dog {
+  string color = 1;
+  string name = 2;
+  Master master = 3;
+}
+
+message Cat {
+  string color = 1;
+  string name = 2;
+  Master master = 3;
+}
+

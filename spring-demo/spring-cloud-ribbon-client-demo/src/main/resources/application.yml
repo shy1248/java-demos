@@ -1,0 +1,21 @@
+###
+# Date        : 2020-10-31 15:04:32
+# Author      : shy
+# Email       : yushuibo@ebupt.com / hengchen2005@gmail.com
+# Version     : v1.0
+# Description : -
+###
+
+server:
+  port: 8101
+
+spring:
+  application:
+    name: service-ribbon
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+
