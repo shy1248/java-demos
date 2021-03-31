@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package me.shy.demo.grpc;
+package me.shy.netty.grpc;
 
-option java_package = "me.shy.demo.netty.rpc.grpc.greetingGen";
+option java_package = "me.shy.netty.netty.rpc.grpc.greetingGen";
 option java_outer_classname = "Greeting";
 option java_multiple_files = true;
 

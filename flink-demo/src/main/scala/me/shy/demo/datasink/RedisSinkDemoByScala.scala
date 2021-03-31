@@ -1,4 +1,4 @@
-package me.shy.demo.datasink
+package me.shy.flink.datasink
 
 import io.lettuce.core.RedisURI
 import io.lettuce.core.cluster.RedisClusterClient

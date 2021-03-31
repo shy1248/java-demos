@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package me.shy.demo.grpc;
+package me.shy.netty.grpc;
 
-option java_package = "me.shy.demo.netty.rpc.grpc.userGen";
+option java_package = "me.shy.netty.netty.rpc.grpc.userGen";
 // 此处的Java名不能与message相同
 option java_outer_classname = "UserProto";
 option java_multiple_files = true;

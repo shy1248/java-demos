@@ -1,6 +1,6 @@
-package me.shy.demo.partition
+package me.shy.flink.partition
 
-import me.shy.demo.datasource.CustomSingleDataSourceByScala
+import me.shy.flink.datasource.CustomSingleDataSourceByScala
 import org.apache.flink.api.common.functions.Partitioner
 import org.apache.flink.api.scala._
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment

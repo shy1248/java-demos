@@ -1,7 +1,7 @@
 // 生成对应语言的代码：thrift --gen java/py/perl... student.thrift
 // 指定命名空间，对于java，生成的代码以此作为包名
 // 可以使用include包含其它的thrift文件
-namespace java me.shy.demo.netty.rpc.thrift.gen
+namespace java me.shy.netty.netty.rpc.thrift.gen
 // 定义python语言的namespace，需要下载thrift源码包，然后进入lib/py中使用 python setup.py install 来安装python的依赖的库
 namespace py student_gen
 

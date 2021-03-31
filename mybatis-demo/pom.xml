@@ -2,7 +2,22 @@
 
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <groupId>me.shy.demo</groupId>
     <artifactId>mybatis-demo</artifactId>
+    <version>1.0</version>
+    <modelVersion>4.0.0</modelVersion>
+
+    <name>mybats-demo Maven Webapp</name>
+    <!-- FIXME change it to the project's website -->
+    <packaging>war</packaging>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <url>http://www.example.com</url>
 
     <build>
         <finalName>mybatis-demo</finalName>
@@ -93,27 +108,5 @@
         <!--    <artifactId>jstl-impl</artifactId>-->
         <!--    <version>1.2</version>-->
         <!--</dependency>-->
-        <dependency>
-            <artifactId>junit</artifactId>
-            <groupId>junit</groupId>
-            <scope>test</scope>
-            <version>4.11</version>
-        </dependency>
     </dependencies>
-    <groupId>me.shy</groupId>
-    <modelVersion>4.0.0</modelVersion>
-
-    <name>mybats-demo Maven Webapp</name>
-    <!-- FIXME change it to the project's website -->
-    <packaging>war</packaging>
-
-    <properties>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
-    <url>http://www.example.com</url>
-
-    <version>1.0</version>
 </project>

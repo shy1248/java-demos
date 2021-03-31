@@ -1,4 +1,4 @@
-package me.shy.demo.datasource
+package me.shy.flink.datasource
 
 import org.apache.flink.api.scala._
 import org.apache.flink.streaming.api.functions.source.{RichParallelSourceFunction, SourceFunction}

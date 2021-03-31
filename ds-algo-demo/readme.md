@@ -263,7 +263,7 @@
 
 其中，顺序表类似于数组，为一块连续的存储空间，不需要额外存储空间来存储节点的关系。
 
-### 稀疏数组（sparsearray | me.shy.demo.sparsearray.Chess.java）
+### 稀疏数组（sparsearray | me.shy.dsalgo.sparsearray.Chess.java）
 
   ![](readme/2021-02-15-13-32-47.png)
 
@@ -274,17 +274,17 @@
   例子如下：
   ![](readme/2021-02-15-14-00-51.png)
 
-### 队列（Queue | me.shy.demo.queue.CycleArray.java）
+### 队列（Queue | me.shy.dsalgo.queue.CycleArray.java）
 
 - 队列是一个有序列表，可以使用数组和链表实现；
 - 遵循**先进先出**的原则；
 - 从队列前端入队，从队列尾部出队；
 
-### 链表（LinkedList | me.shy.demo.list.UnidirectionalLinkedListDemo.java）
+### 链表（LinkedList | me.shy.dsalgo.list.UnidirectionalLinkedListDemo.java）
 
 - 链表是一种有序列表，但在内存中存储的方式与数组不一样，并非连续的，而是分为2部分，一部分存储数据，另一部分则存放指向下一个节点的地址；
 - 链表可分为单向链表，双向链表，单向循环链表与双向循环链表；
-- 面试题（`me.shy.demo.list.UnidirectionalLinkedListInterviewDemo.java`）：
+- 面试题（`me.shy.dsalgo.list.UnidirectionalLinkedListInterviewDemo.java`）：
 
   1. 求单链表中有效节点的个数（新浪）；
   2. 查找单链表中倒数第k个节点（新浪）；
@@ -307,7 +307,7 @@
   ```
 - 双向链表可以自我删除，不用辅助节点；
 
-### 单向循环链表（me.shy.demo.list.JosephusDemo.java）
+### 单向循环链表（me.shy.dsalgo.list.JosephusDemo.java）
 
 约瑟夫问题（Josephus Problem）
 
@@ -315,7 +315,7 @@
 
 17世纪的法国数学家加斯帕在《数目的游戏问题》中讲了这样一个故事：15个教徒和15 个非教徒在深海上遇险，必须将一半的人投入海中，其余的人才能幸免于难，于是想了一个办法：30个人围成一圆圈，第一个人开始依次报数，每数到第九个人就将他扔入大海，如此循环进行直到仅余15个人为止。问怎样排法，才能使每次投入大海的都是非教徒。
 
-### 栈（Stack | me.shy.demo.stack.*.java）
+### 栈（Stack | me.shy.dsalgo.stack.*.java）
 
 栈是一种先进后出的有序列表。只能从栈顶入栈（push）和出栈（pop）。
 
@@ -358,7 +358,7 @@
 
 ![](readme/2021-02-17-15-04-46.png)
 
-### 递归（Recursion | me.shy.demo.recursion.*.java）
+### 递归（Recursion | me.shy.dsalgo.recursion.*.java）
 
 递归，即方法内调用自身，每次传入的变量不一样，有助于编程者解决复杂的问题。
 
@@ -373,7 +373,7 @@
 2. 各种算法中也会用到递归，如快速排序、归并排序、二分查找和分治算法等；
 3. 用栈解决的问题使用递归实现代码会比较简介；
 
-### 排序算法（Sort Algorithm | me.shy.demo.sort.*.java）
+### 排序算法（Sort Algorithm | me.shy.dsalgo.sort.*.java）
 
 排序是指将一组数据依照指定的顺序进行排列的算法。
 
@@ -387,7 +387,7 @@
 
 ![](readme/2021-02-19-12-46-14.png)
 
-- 冒泡排序（Bubble Sorting | `me.shy.demo.sort.BubbleSorter.java`）
+- 冒泡排序（Bubble Sorting | `me.shy.dsalgo.sort.BubbleSorter.java`）
 
  通过对要排序的序列从前往后（索引较低的在前面），依次拿出相邻的2个元素进行比较，若发现逆序，则交换2个元素的位置。
  当遍历一次序列后，最后一个数就是序列中的最大数；
@@ -399,7 +399,7 @@
 
  **优化：**若某次遍历下来发现没有任何交换发生，则说明序列已经有序，可提前结束。
 
-- 选择排序（Select Sorting | `me.shy.demo.sort.SelectSorter.java`）
+- 选择排序（Select Sorting | `me.shy.dsalgo.sort.SelectSorter.java`）
 
 假设有 n 个元素的序列 array：
 1. 第一轮从 array[0] - array[n-1] 中选择最小（按从小到大的顺序排列）的与 array[0] 进行交换；
@@ -412,7 +412,7 @@
 在循环中，先假定当前元素是最小的，依次与后面的元素对比，若发现更小的，就将当前的最小的更新为新发现的那个，并记录索引；
 当元素对比完成后，就将找到的最小元素与当前要交换的元素进行交换；
 
-- 插入排序（Insertion Sorting | `me.shy.demo.sort.InsertionSorter.java`）
+- 插入排序（Insertion Sorting | `me.shy.dsalgo.sort.InsertionSorter.java`）
 
 插入排序是指对欲排序的元素以插入的方式寻找该元素适当的位置，以达到排序的目的。
 
@@ -420,17 +420,17 @@
 
 **存在的问题**：当插入的数较小的时，数组后移的次数较多，对效率有影响。
 
-- 希尔排序（Shell Sorting | `me.shy.demo.sort.*ShellSorter.java`）
+- 希尔排序（Shell Sorting | `me.shy.dsalgo.sort.*ShellSorter.java`）
 
 希尔排序也是一种插入排序，也称为缩小增量排序。与简单的插入排序不同的是，希尔排序先将序列按下标进行分组，然后每一组里面使用简单插入排序算法；随着分组数逐渐减少，每组越来越有序，当分组减至1是，整个序列恰好被分成一组，算法变终止，希尔排序解决了简单插入排序的存在的问题，即当插入的数较小的时，数组后移的次数较多。希尔排序在处理有序数据插入时有**交换**和**移动**两种办法。
 
-- 快速排序（Quick Sorting | `me.shy.demo.sort.QuickSorter.java`）
+- 快速排序（Quick Sorting | `me.shy.dsalgo.sort.QuickSorter.java`）
 
 快速排序是对冒泡排序的一种改进。其基本思想是：通过一次排序将要排序的序列分割成2个部分，其中一部分数据比另一部分的数据都要小，然后再按照此方法分别对2部分数据进行排序，整个排序过程可以递归进行，一次达到将整个序列变成有序序列。
 
 排序算法的思想非常简单，在待排序的数列中，我们首先要找一个数字作为基准数（这只是个专用名词）。为了方便，我们一般选择第 1 个数字作为基准数（其实选择第几个并没有关系）。接下来我们需要把这个待排序的数列中小于基准数的元素移动到待排序的数列的左边，把大于基准数的元素移动到待排序的数列的右边。这时，左右两个分区的元素就相对有序了；接着把两个分区的元素分别按照上面两种方法继续对每个分区找出基准数，然后移动，直到各个分区只有一个数时为止。
 
-- 归并排序（Merge Sorting | `me.shy.demo.sort.MergeSorter.java`）
+- 归并排序（Merge Sorting | `me.shy.dsalgo.sort.MergeSorter.java`）
 
 归并排序是利用归并的思想实现的排序方法，该算法采用经典的**分治（divide-and-conquer）策略**（分治法将问题**分(divide)**成一些小的问题递归求解，而**治(conquer)**的阶段则是将分的阶段得到的各种答案修补到一起，即分而治之）。归并排序可采用递归和迭代来实现。
 
@@ -438,7 +438,7 @@
 
 ![](readme/2021-02-19-23-02-21.png)
 
-- 基数排序（Radix Sorting | `me.shy.demo.sort.RadixSorter.java`）
+- 基数排序（Radix Sorting | `me.shy.dsalgo.sort.RadixSorter.java`）
 
 基数排序(RadixSort)是在桶排序的基础上发展而来的，两种排序都是分配排序的高级实现。分配排序(DistributiveSort)的基本思想：排序过程无须比较关键字，而是通过“分配”和“收集”过程来实现排序。它们的时间复杂度可达到线性阶：O(n)。
 

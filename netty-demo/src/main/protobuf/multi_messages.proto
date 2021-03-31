@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-package me.shy.demo.protobuf;
+package me.shy.netty.protobuf;
 
 option optimize_for = SPEED;
-option java_package = "me.shy.demo.netty.rpc.protobuf";
+option java_package = "me.shy.netty.netty.rpc.protobuf";
 option java_outer_classname = "MultiMessageProto";
 
 message Pet {
