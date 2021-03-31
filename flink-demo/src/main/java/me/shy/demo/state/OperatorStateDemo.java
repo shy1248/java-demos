@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import org.apache.commons.lang3.SystemUtils;
 import org.apache.flink.api.common.RuntimeExecutionMode;
 import org.apache.flink.api.common.restartstrategy.RestartStrategies;
 import org.apache.flink.api.common.state.ListState;
@@ -33,8 +34,14 @@ public class OperatorStateDemo {
         //每隔1s执行一次Checkpoint
         env.enableCheckpointing(1000);
         // 指定 checkpoint 的存放位置
+        String checkpointDirectory = null;
+        if (SystemUtils.IS_OS_WINDOWS) {
+            checkpointDirectory = "file:///c/Users/shy/Downloads/flink-demo-checkpoint";
+        } else {
+            checkpointDirectory = "file:///Users/shy/Downloads/flink-demo-checkpoint";
+        }
         env.setStateBackend(
-                new FsStateBackend("file:///Users/shy/Downloads/flink-demo-checkpoint"));
+                new FsStateBackend(checkpointDirectory));
         env.getCheckpointConfig().enableExternalizedCheckpoints(
                 CheckpointConfig.ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION);
         env.getCheckpointConfig().setCheckpointingMode(CheckpointingMode.EXACTLY_ONCE);
