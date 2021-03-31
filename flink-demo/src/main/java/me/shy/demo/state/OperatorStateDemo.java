@@ -36,7 +36,7 @@ public class OperatorStateDemo {
         // 指定 checkpoint 的存放位置
         String checkpointDirectory = null;
         if (SystemUtils.IS_OS_WINDOWS) {
-            checkpointDirectory = "file:///c/Users/shy/Downloads/flink-demo-checkpoint";
+            checkpointDirectory = "file:///d:\\testbased\\flink-demo-checkpoint";
         } else {
             checkpointDirectory = "file:///Users/shy/Downloads/flink-demo-checkpoint";
         }
