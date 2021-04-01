@@ -22,7 +22,7 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.source.SourceFunction;
 import org.apache.flink.table.api.EnvironmentSettings;
 import org.apache.flink.table.api.Table;
-// import org.apache.flink.table.api.Tumble;
+import org.apache.flink.table.api.Tumble;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 import org.apache.flink.types.Row;
 
@@ -71,16 +71,16 @@ public class TableDemo {
                 .assignTimestampsAndWatermarks(WatermarkStrategy.<Order>forBoundedOutOfOrderness(Duration.ofSeconds(5))
                         .withTimestampAssigner((order, temestamp) -> order.getCreatedTime()));
         // 创建表，rowtime() 标记该列为事件时间
-        // Table tableOrder = tableEnv.fromDataStream(dataStreamWithWatermark, $("orderId"), $("userId"), $("money"),
-        //         $("createdTime").rowtime());
+        Table tableOrder = tableEnv.fromDataStream(dataStreamWithWatermark, $("orderId"), $("userId"), $("money"),
+                $("createdTime").rowtime());
 
         // 输出表约束
         // tableOrder.printSchema();
 
         // table api
-        // Table select = tableOrder.window(Tumble.over(lit(5).second()).on($("createdTime")).as("w"))
-        //         .groupBy($("userId"), $("w")).select($("userId").as("user"), $("orderId").count().as("total"),
-        //                 $("money").max().as("max"), $("money").min().as("min"));
+        Table select = tableOrder.window(Tumble.over(lit(5).second()).on($("createdTime")).as("w"))
+                .groupBy($("userId"), $("w")).select($("userId").as("user"), $("orderId").count().as("total"),
+                        $("money").max().as("max"), $("money").min().as("min"));
 
         // sql api
         // String sql = String.join(System.lineSeparator(),
@@ -90,14 +90,14 @@ public class TableDemo {
         // Table select = tableEnv.sqlQuery(sql);
 
         // 创建临时视图
-        tableEnv.createTemporaryView("t_order", dataStreamWithWatermark, $("orderId"), $("userId"), $("money"),
-                $("createdTime").rowtime());
+        // tableEnv.createTemporaryView("t_order", dataStreamWithWatermark, $("orderId"), $("userId"), $("money"),
+        //         $("createdTime").rowtime());
 
         // sql api
-        String sql = String.join(System.lineSeparator(),
-                "select userId,count(orderId) as total,max(money) as maxMoney,min(money) as minMoney from t_order ",
-                "group by userId, tumble(createdTime, interval '5' second)");
-        Table select = tableEnv.sqlQuery(sql);
+        // String sql = String.join(System.lineSeparator(),
+        //         "select userId,count(orderId) as total,max(money) as maxMoney,min(money) as minMoney from t_order ",
+        //         "group by userId, tumble(createdTime, interval '5' second)");
+        // Table select = tableEnv.sqlQuery(sql);
 
         // 如果需要在控制台输出，需要将 Table 转为 DataStream。Table 转为 DataStream 有 2 种：
         // toAppendStream：用于动态表只有 insert 操作时
@@ -119,7 +119,7 @@ public class TableDemo {
 
         @Override
         public String toString() {
-            return String.format("orderId=%s,userId=%d,money=%d,time=%s", orderId, userId, money,
+            return String.format("[orderId=%s,userId=%d,money=%d,time=%s]", orderId, userId, money,
                     DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss")
                             .format(Instant.ofEpochMilli(createdTime).atZone(ZoneId.systemDefault())));
         }
