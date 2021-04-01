@@ -4,12 +4,12 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>me.shy.demo</groupId>
+        <groupId>me.shy</groupId>
         <artifactId>spring-demo</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <groupId>me.shy.demo</groupId>
+    <groupId>me.shy</groupId>
     <artifactId>spring-cloud-ribbon-client-demo</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>spring-cloud-ribbon-client-demo</name>

@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>spring-demo</artifactId>
-        <groupId>me.shy.demo</groupId>
+        <groupId>me.shy</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>me.shy.demo</groupId>
+    <groupId>me.shy</groupId>
     <artifactId>spring-cloud-eureka-client-demo</artifactId>
     <version>1.0-SNAPSHOT</version>
 
