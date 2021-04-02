@@ -26,27 +26,42 @@ public class TableConnectorDemo {
         // 0000007, 1, 6
         // 0000008, 2, 11
 
-        String sourceTableDescribe = String.join(System.lineSeparator(), "CREATE TABLE kafka_source_demo (",
-                "  `enevt_time` TIMESTAMP(3) METADATA FROM 'value.source.timestamp' VIRTUAL,",
-                "  `origin_table` STRING METADATA FROM 'value.source.table' VIRTUAL,",
-                "  `partition_id` BIGINT METADATA FROM 'partition' VIRTUAL,", "  `offset` BIGINT METADATA VIRTAUL,",
-                "  `order_id` STRING,", "  `user_id` INT", "  `amount` INT", ") WITH (", "  'connector' = 'kafka',",
-                "  'topic' = 'flink_table_connector_demo',", "  'properties.bootstrapservers' = 'kafka-svc:9092',",
-                "  'properties.group.id' = 'flink-demo',", "  'scan.startup.mode' = 'earliest-offset',",
+        String sourceTableDescribe = String.join(System.lineSeparator(),
+                "CREATE TABLE kafka_source_demo (",
+                "  `event_time` TIMESTAMP(3) METADATA FROM 'timestamp',",
+                "  `order_id` STRING,",
+                "  `user_id` INT,",
+                "  `amount` INT,",
+                " WATERMARK FOR event_time AS event_time - INTERVAL '5' SECOND",
+                ") WITH (",
+                "  'connector' = 'kafka',",
+                "  'topic' = 'flink-table-source-demo',",
+                "  'properties.bootstrap.servers' = 'kafka-svc:9092',",
+                "  'properties.group.id' = 'flink-demo',",
+                "  'scan.startup.mode' = 'earliest-offset',",
                 "  'value.format' = 'csv'", ")");
-        tableEnv.execute(sourceTableDescribe);
+        tableEnv.executeSql(sourceTableDescribe);
 
-        String sinkTableDescribe = String.join(System.lineSeparator(), "CREATE TABLE kafka_sink_demo (",
-                "  `user_id` STRING,", "  `total` INT", "  `max_amount` INT", "  `min_amount` INT", ") WITH (",
-                "  'connector' = 'kafka',", "  'topic' = 'flink_table_sink_demo',",
-                "  'properties.bootstrapservers' = 'kafka-svc:9092',", "  'properties.group.id' = 'flink-demo',",
-                "  'scan.startup.mode' = 'earliest-offset',", "  'value.format' = 'csv'", ")");
-        tableEnv.execute(sinkTableDescribe);
+        String sinkTableDescribe = String.join(System.lineSeparator(),
+                "CREATE TABLE kafka_sink_demo (",
+                "  `user_id` INT,",
+                "  `total` BIGINT,",
+                "  `max_amount` INT,",
+                "  `min_amount` INT",
+                ") WITH (",
+                "  'connector' = 'kafka',",
+                "  'topic' = 'flink-table-sink-demo',",
+                "  'properties.bootstrap.servers' = 'kafka-svc:9092',",
+                "  'properties.group.id' = 'flink-demo',",
+                "  'scan.startup.mode' = 'earliest-offset',",
+                "  'value.format' = 'csv'", ")");
+        tableEnv.executeSql(sinkTableDescribe);
 
-        tableEnv.execute(
-                "insert into kafka_sink_demo as select user_id, count(order_id), max(amount), min(amount) from kafka_source_demo group by user_id");
+        // kafka sink table only suport append aggregate
+        tableEnv.executeSql(
+                "insert into kafka_sink_demo select user_id, count(order_id), max(amount), min(amount) from kafka_source_demo group by TUMBLE(event_time, INTERVAL '10' SECOND), user_id");
 
-        // java.lang.IllegalStateException: No operators defined in streaming topology. Cannot generate StreamGraph.
+        // not needed: java.lang.IllegalStateException: No operators defined in streaming topology. Cannot generate StreamGraph.
         // env.execute("Table-connector-demo");
         // tableEnv.execute("Table-connector-demo");
     }
