@@ -8,9 +8,6 @@
 package me.shy.flink.example.pojo;
 
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
