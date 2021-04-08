@@ -1,4 +1,4 @@
-package me.shy.flink.partition;
+package me.shy.flink.transformission;
 
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.functions.Partitioner;
@@ -16,9 +16,15 @@ import me.shy.flink.datasource.CustomSignleDataSource;
  * @Description: 自定义 flink 流分区
  * <p>
  * flink 分区操作有以下几种：
- * 1.shuffle     -- 随机分区
- * 2.rebalence   -- 平衡分区
- * 3.rescale     -- 根据比例分区
+ * 1.global      -- 全部发往第一个 task
+ * 2.broadcast   -- 广播，数据给下游的 task 都发送一份
+ * 3.forward     -- 上下游并行度一样时一对一发送
+ * 4.shuffle      -- 随机均匀分配
+ * 5.rebalence   -- 轮训分配
+ * 3.rescale     -- 基于上下游Operator的并行度，将记录以循环的方式输出到下游Operator的每个实例，例如：
+ *                  上游并行度是2，下游是4，则上游一个并行度以循环的方式将记录输出到下游的两个并行度上;
+ *                  上游另一个并行度以循环的方式将记录输出到下游另两个并行度上。若上游并行度是4，下游并
+ *                  行度是2，则上游两个并行度将记录输出到下游一个并行度上；上游另两个并行度将记录输出到下游另一个并行度上
  * 4.custom      -- 自定义分区
  * rebalence 与 rescale 的区别是：
  * 假设当前流的上游分区为2，下游分区为4，那么 rebalence 的2个分区均会向下游的4个分区发送数据，
@@ -27,7 +33,7 @@ import me.shy.flink.datasource.CustomSignleDataSource;
  * <p>
  * 自定义分区需要实现 Partitioner<T> 接口
  */
-public class CustomPartition implements Partitioner<String> {
+public class CustomPartitionDemo implements Partitioner<String> {
     private static final long serialVersionUID = 1L;
 
     public static void main(String[] args) throws Exception {
@@ -45,7 +51,7 @@ public class CustomPartition implements Partitioner<String> {
             }
         });
         // 使用 Tuple DataStream 的 partitionCustom 对流进行分区
-        dataTuple.partitionCustom(new CustomPartition(), t -> t.f0)
+        dataTuple.partitionCustom(new CustomPartitionDemo(), t -> t.f0)
             // 输出看效果
             .map(new MapFunction<Tuple1<String>, String>() {
                 private static final long serialVersionUID = 1L;
