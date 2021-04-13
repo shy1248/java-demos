@@ -1,0 +1,75 @@
+[
+    {
+        "path": [
+            "HOME",
+            "GOODS_LIST",
+            "GOODS_DETAIL",
+            "CART",
+            "TRADE",
+            "PAYMENT"
+        ],
+        "rate": 20
+    },
+    {
+        "path": [
+            "HOME",
+            "SEARCH",
+            "GOODS_LIST",
+            "GOODS_DETAIL",
+            "LOGIN",
+            "GOODS_DETAIL",
+            "CART",
+            "TRADE",
+            "PAYMENT"
+        ],
+        "rate": 50
+    },
+    {
+        "path": [
+            "HOME",
+            "MINE",
+            "ORDERS_UNPAID",
+            "TRADE",
+            "PAYMENT"
+        ],
+        "rate": 10
+    },
+    {
+        "path": [
+            "HOME",
+            "MINE",
+            "ORDERS_UNPAID",
+            "GOODS_DETAIL",
+            "GOODS_SPEC",
+            "COMMENT",
+            "TRADE",
+            "PAYMENT"
+        ],
+        "rate": 5
+    },
+    {
+        "path": [
+            "HOME",
+            "MINE",
+            "ORDERS_UNPAID",
+            "GOODS_DETAIL",
+            "GOODS_SPEC",
+            "COMMENT",
+            "HOME"
+        ],
+        "rate": 5
+    },
+    {
+        "path": [
+            "HOME",
+            "GOODS_DETAIL"
+        ],
+        "rate": 70
+    },
+    {
+        "path": [
+            "HOME"
+        ],
+        "rate": 10
+    }
+]

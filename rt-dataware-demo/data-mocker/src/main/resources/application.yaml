@@ -1,0 +1,100 @@
+logging:
+  pattern:
+    console: \%m\%n
+  level:
+    root: debug
+
+spring:
+  main:
+    banner-mode: off
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://minikube:3306/rt-dataware-demo?characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    username: demo
+    password: 123456
+  kafka:
+    template:
+      default-topic: ods-base-log
+    producer:
+      acks: 0
+    bootstrap-servers:
+    - minikube:9092
+
+mybatis-plus:
+  global-config:
+    db-config:
+      field-strategy: not-null
+
+mocker:
+  business-data:
+    # 业务日期
+    business-date: 2020/12/18 14:32:00
+    # 是否清除已存在的数据
+    is-clear: 1
+    # 是否重置用户
+    user-clear: 0
+    # 生成的新用户数量
+    user-count: 0
+    # 男性比例
+    user-male-rate: 20
+    # 用户数据变化概率
+    user-update-rate: 20
+    # 收藏取消比例
+    favorite-cancel-rate: 10
+    # 收藏数量
+    favorite-count: 100
+    # 每个用户添加购物车的概率
+    cart-user-rate: 10
+    # 每次每个用户最多添加多少种商品进购物车
+    cart-max-sku-count: 8
+    # 每个商品最多买几个
+    cart-max-sku-number: 3
+    # 购物车来源比例，用户查询：商品推广：智能推荐：促销活动
+    cart-source-type-rate: "60:20:10:10"
+    # 用户下单比例
+    order-user-rate: 30
+    # 用户购买商品比例
+    order-sku-rate: 50
+    # 是否参加活动
+    order-join-activity: 0
+    # 是否使用购物券
+    order-use-coupon: 0
+    # 退款原因比例，质量问题：商品描述与实际描述不一致：缺货：号码不合适：拍错：不想买了：其他
+    order-back-reason-rate: "30:10:20:5:15:5:5"
+    # 购物券领取人数
+    coupon-count: 100
+    # 支付比例
+    payment-rate: 70
+    # 支付方式，支付宝：微信：银联
+    payment-type: "30:60:10"
+    # 评价比例，好：中：差：自动
+    comment-brand-rate: "30:10:10:50"
+  actionlog:
+    # 业务日期
+    business-date: "2020-12-18"
+    # 模拟数据发送模式
+    send-type: "log"
+    # http模式下，发送的地址
+    http-url: "http://minikube:8888/report"
+    # 启动次数
+    startup.count: 1000
+    # 设备最大值
+    max.deviceId: 20
+    # 会员最大值
+    max.uid: 50
+    # 商品最大值
+    max.skuId: 10
+    # 页面平均访问时间
+    page.durationTime: 20000
+    # 错误概率 百分比
+    error.rate: 3
+    # 每条日志发送延迟 ms
+    log.sleep: 100
+    # 商品详情来源：用户查询，商品推广，智能推荐, 促销活动
+    detail.sourceTypeRate: "40:25:15:20"
+    # 领取购物券概率
+    getCouponRate: 75
+    # 购物券最大id
+    max.couponId: 3
+    # 搜索关键词
+    search.keyword: "图书,小米,iphone11,电视,口红,PS5,苹果手机,小米盒子"
