@@ -20,8 +20,13 @@ import org.springframework.validation.annotation.Validated;
 @Configuration
 @ConfigurationProperties(prefix = "mocker", ignoreInvalidFields = true)
 public class DataMockerConfig {
-    /** 业务日期 */
+    /** 业务日期，格式：yyyy-MM-dd */
     public static LocalDate businessDate = LocalDate.now();
+    public static Integer mockerConcurrence = 100;
+    /** 日志收集类型：DB，LOG，KAFKA，HTTP */
+    public static String collectType = "LOG";
+    /** 当日志收集类型为 http 时，此处指定 http 服务的地址 */
+    public static String httpUrl = "http://localhost:8888/report";
     /** 是否清除数据库中已存在的数据 */
     public static Boolean isClear = Boolean.TRUE;
     /** 是否重置数据库中的用户 */
@@ -62,11 +67,6 @@ public class DataMockerConfig {
     public static Integer[] paymentTypeRates = { 60, 30, 10 };
     /** 评价级别比例，好：中：差：自动 */
     public static Integer[] commentBrandRates = { 30, 10, 10, 50 };
-    public static Integer mockerConcurrence = 100;
-    /** 日志收集类型：DB，LOG，KAFKA，HTTP */
-    public static String collectType = "LOG";
-    /** 当日志收集类型为 http 时，此处指定 http 服务的地址 */
-    public static String httpUrl = "http://localhost:8888/report";
     /** 设备 id 最大值 */
     public static Integer maxDeviceId = 500;
     /** 用户 id 最大值 */

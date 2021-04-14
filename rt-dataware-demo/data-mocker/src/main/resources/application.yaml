@@ -8,8 +8,9 @@ spring:
   main:
     banner-mode: off
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://minikube:3306/rt-dataware-demo?characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    # driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://minikube:3306/demo?characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
     username: demo
     password: 123456
   kafka:
@@ -29,7 +30,9 @@ mybatis-plus:
       field-strategy: not-null
 
 mocker:
+  mocker-concurrence: 10
   business-date: 2020-12-18
+  collect-type: LOG
   is-clear: false
   user-clear: false
   new-user-count: 0
@@ -50,7 +53,6 @@ mocker:
   payment-rate: 70
   payment-type-rates: [30, 60, 10]
   comment-brand-rates: [30, 10, 10, 50]
-  collect-type: LOG
   http-url: http://minikube:8888/report
   max-device-id: 20
   max-user-id: 50

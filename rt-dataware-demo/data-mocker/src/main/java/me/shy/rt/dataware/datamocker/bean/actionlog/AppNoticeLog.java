@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AppNotice {
+public class AppNoticeLog {
+    /** 通知 id */
     private Long noticeId;
 }

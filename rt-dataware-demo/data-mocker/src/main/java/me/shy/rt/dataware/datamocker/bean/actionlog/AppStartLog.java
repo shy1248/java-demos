@@ -19,7 +19,7 @@ import me.shy.rt.dataware.datamocker.util.WeightOption;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AppStart {
+public class AppStartLog {
     /** 开启 App 方式，安装后进入：install，点击图标：icon，点击通知：notice */
     private String startTypeEntry;
     /** 开屏广告 id */
@@ -31,8 +31,8 @@ public class AppStart {
     /** 加载时长：计算下拉开始到接口返回数据的时间，（开始加载报0，加载成功或加载失败才上报时间）*/
     private Integer loadingTime;
 
-    public static AppStart newInstance() {
-        AppStart s = new AppStart();
+    public static AppStartLog newInstance() {
+        AppStartLog s = new AppStartLog();
         s.startTypeEntry = new RandomWeightOption<String>(new WeightOption<String>("install", 5),
                 new WeightOption<String>("icon", 70), new WeightOption<String>("notice", 20)).nextPayload();
         s.openScreenAdId = RandomNumeric.nextInteger(0, 20) + 0L;

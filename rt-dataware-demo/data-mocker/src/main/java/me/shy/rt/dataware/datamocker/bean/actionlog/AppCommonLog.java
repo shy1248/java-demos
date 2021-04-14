@@ -20,11 +20,11 @@ import me.shy.rt.dataware.datamocker.util.WeightOption;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AppCommon {
+public class AppCommonLog {
     /** 设备 id */
     private String deviceId;
     /** 用户 id */
-    private String uid;
+    private String userId;
     /** 程序版本号 */
     private String version;
     /** 渠道号 */
@@ -40,8 +40,8 @@ public class AppCommon {
     /** 是否新用户 */
     private String isNew;
 
-    public static AppCommon newInstance() {
-        AppCommon s = new AppCommon();
+    public static AppCommonLog newInstance() {
+        AppCommonLog s = new AppCommonLog();
 
         s.deviceId = "mid_" + RandomNumeric.nextInteger(1, DataMockerConfig.maxDeviceId);
         s.area = new RandomWeightOption<String>(new WeightOption<String>("110000", 30),
@@ -75,7 +75,7 @@ public class AppCommon {
         s.version = "v" + new RandomWeightOption<String>(new WeightOption<String>("2.1.134", 70),
                 new WeightOption<String>("2.1.132", 20), new WeightOption<String>("2.1.111", 5),
                 new WeightOption<String>("2.0.1", 5)).nextPayload();
-        s.uid = RandomNumeric.nextInteger(1, DataMockerConfig.maxUserId) + "";
+        s.userId = RandomNumeric.nextInteger(1, DataMockerConfig.maxUserId) + "";
         s.isNew = RandomNumeric.nextInteger(0, 1) + "";
         return s;
     }

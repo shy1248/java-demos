@@ -3,7 +3,7 @@
  * @Author      : shy
  * @Email       : yushuibo@ebupt.com / hengchen2005@gmail.com
  * @Version     : v1.0
- * @Description : App 行为日志
+ * @Description : App 主行为日志
  */
 
 package me.shy.rt.dataware.datamocker.bean.actionlog;
@@ -18,30 +18,36 @@ import lombok.NoArgsConstructor;
 import me.shy.rt.dataware.datamocker.util.RandomNumeric;
 import me.shy.rt.dataware.datamocker.util.RandomWeightOption;
 import me.shy.rt.dataware.datamocker.config.DataMockerConfig;
-import me.shy.rt.dataware.datamocker.enums.ActionId;
+import me.shy.rt.dataware.datamocker.enums.ActionType;
 import me.shy.rt.dataware.datamocker.enums.ItemType;
-import me.shy.rt.dataware.datamocker.enums.PageId;
+import me.shy.rt.dataware.datamocker.enums.Page;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AppAction {
+public class AppActionLog {
+    /** 行为时间戳 */
     private Long timestamp;
-    private ActionId actionId;
+    /** 行为类型 */
+    private ActionType actionId;
+    /** 行为操作对象类型 */
     private ItemType itemType;
+    /** 行为操作对象 */
     private String item;
+    /** 预留字段1 */
     private String extend1;
+    /** 预留字段2 */
     private String extend2;
 
-    public AppAction(ActionId actionId, ItemType itemType, String item) {
+    public AppActionLog(ActionType actionId, ItemType itemType, String item) {
         this.actionId = actionId;
         this.itemType = itemType;
         this.item = item;
     }
 
-    public static List<AppAction> batchInstances(AppPage appPage, Long timestamp, Integer duration) {
-        AppAction action = null;
-        List<AppAction> actions = new ArrayList<>();
+    public static List<AppActionLog> batchInstances(AppPageLog appPage, Long timestamp, Integer duration) {
+        AppActionLog action = null;
+        List<AppActionLog> actions = new ArrayList<>();
 
         Boolean isFavorite = RandomWeightOption.<Boolean>builder().add(true, DataMockerConfig.favoriteRate)
                 .add(false, 100 - DataMockerConfig.favoriteRate).build().nextPayload();
@@ -60,50 +66,50 @@ public class AppAction {
         Boolean isFavoriteCancel = RandomWeightOption.<Boolean>builder().add(true, DataMockerConfig.favoriteCancelRate)
                 .add(false, 100 - DataMockerConfig.favoriteCancelRate).build().nextPayload();
 
-        if (appPage.getPageId() == PageId.GOODS_DETAIL) {
+        if (appPage.getPage() == Page.GOODS_DETAIL) {
             if (isFavorite) {
-                action = new AppAction(ActionId.FAVORITE_ADD, appPage.getItemType(), appPage.getItem());
+                action = new AppActionLog(ActionType.FAVORITE_ADD, appPage.getItemType(), appPage.getItem());
                 actions.add(action);
             }
             if (isInCart) {
-                action = new AppAction(ActionId.CART_ADD, appPage.getItemType(), appPage.getItem());
+                action = new AppActionLog(ActionType.CART_ADD, appPage.getItemType(), appPage.getItem());
                 actions.add(action);
             }
             if (isGetCoupon) {
                 int couponId = RandomNumeric.nextInteger(1, DataMockerConfig.maxCouponId);
-                action = new AppAction(ActionId.GET_COUPON, ItemType.COUPON_ID, String.valueOf(couponId));
+                action = new AppActionLog(ActionType.GET_COUPON, ItemType.COUPON_ID, String.valueOf(couponId));
                 actions.add(action);
             }
 
-        } else if (appPage.getPageId() == PageId.CART) {
+        } else if (appPage.getPage() == Page.CART) {
 
             if (isCartAddNum) {
                 String skuId = RandomNumeric.nextInteger(1, DataMockerConfig.maxSkuId) + "";
-                action = new AppAction(ActionId.CART_ADD_NUM, ItemType.SKU_ID, skuId);
+                action = new AppActionLog(ActionType.CART_ADD_NUM, ItemType.SKU_ID, skuId);
                 actions.add(action);
             }
             if (isCartMinusNum) {
                 String skuId = RandomNumeric.nextInteger(1, DataMockerConfig.maxSkuId) + "";
-                action = new AppAction(ActionId.CART_MINUS_NUM, ItemType.SKU_ID, skuId);
+                action = new AppActionLog(ActionType.CART_MINUS_NUM, ItemType.SKU_ID, skuId);
                 actions.add(action);
             }
             if (isCartRemove) {
                 String skuId = RandomNumeric.nextInteger(1, DataMockerConfig.maxSkuId) + "";
-                action = new AppAction(ActionId.CART_REMOVE, ItemType.SKU_ID, skuId);
+                action = new AppActionLog(ActionType.CART_REMOVE, ItemType.SKU_ID, skuId);
                 actions.add(action);
             }
 
-        } else if (appPage.getPageId() == PageId.TRADE) {
+        } else if (appPage.getPage() == Page.TRADE) {
             if (isAddAddress) {
-                action = new AppAction(ActionId.TRADE_ADD_ADDRESS, null, null);
+                action = new AppActionLog(ActionType.TRADE_ADD_ADDRESS, null, null);
                 actions.add(action);
             }
 
-        } else if (appPage.getPageId() == PageId.FAVORITE) {
+        } else if (appPage.getPage() == Page.FAVORITE) {
             int skuId = RandomNumeric.nextInteger(1, DataMockerConfig.maxSkuId);
             for (int i = 0; i < 3; i++) {
                 if (isFavoriteCancel) {
-                    action = new AppAction(ActionId.FAVORITE_CANEL, ItemType.SKU_ID, skuId + i + "");
+                    action = new AppActionLog(ActionType.FAVORITE_CANEL, ItemType.SKU_ID, skuId + i + "");
                     actions.add(action);
                 }
             }
