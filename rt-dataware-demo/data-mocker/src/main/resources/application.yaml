@@ -19,6 +19,9 @@ spring:
       acks: 0
     bootstrap-servers:
     - minikube:9092
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: GMT+8
 
 mybatis-plus:
   global-config:
@@ -26,75 +29,36 @@ mybatis-plus:
       field-strategy: not-null
 
 mocker:
-  business-data:
-    # 业务日期
-    business-date: 2020/12/18 14:32:00
-    # 是否清除已存在的数据
-    is-clear: 1
-    # 是否重置用户
-    user-clear: 0
-    # 生成的新用户数量
-    user-count: 0
-    # 男性比例
-    user-male-rate: 20
-    # 用户数据变化概率
-    user-update-rate: 20
-    # 收藏取消比例
-    favorite-cancel-rate: 10
-    # 收藏数量
-    favorite-count: 100
-    # 每个用户添加购物车的概率
-    cart-user-rate: 10
-    # 每次每个用户最多添加多少种商品进购物车
-    cart-max-sku-count: 8
-    # 每个商品最多买几个
-    cart-max-sku-number: 3
-    # 购物车来源比例，用户查询：商品推广：智能推荐：促销活动
-    cart-source-type-rate: "60:20:10:10"
-    # 用户下单比例
-    order-user-rate: 30
-    # 用户购买商品比例
-    order-sku-rate: 50
-    # 是否参加活动
-    order-join-activity: 0
-    # 是否使用购物券
-    order-use-coupon: 0
-    # 退款原因比例，质量问题：商品描述与实际描述不一致：缺货：号码不合适：拍错：不想买了：其他
-    order-back-reason-rate: "30:10:20:5:15:5:5"
-    # 购物券领取人数
-    coupon-count: 100
-    # 支付比例
-    payment-rate: 70
-    # 支付方式，支付宝：微信：银联
-    payment-type: "30:60:10"
-    # 评价比例，好：中：差：自动
-    comment-brand-rate: "30:10:10:50"
-  actionlog:
-    # 业务日期
-    business-date: "2020-12-18"
-    # 模拟数据发送模式
-    send-type: "log"
-    # http模式下，发送的地址
-    http-url: "http://minikube:8888/report"
-    # 启动次数
-    startup.count: 1000
-    # 设备最大值
-    max.deviceId: 20
-    # 会员最大值
-    max.uid: 50
-    # 商品最大值
-    max.skuId: 10
-    # 页面平均访问时间
-    page.durationTime: 20000
-    # 错误概率 百分比
-    error.rate: 3
-    # 每条日志发送延迟 ms
-    log.sleep: 100
-    # 商品详情来源：用户查询，商品推广，智能推荐, 促销活动
-    detail.sourceTypeRate: "40:25:15:20"
-    # 领取购物券概率
-    getCouponRate: 75
-    # 购物券最大id
-    max.couponId: 3
-    # 搜索关键词
-    search.keyword: "图书,小米,iphone11,电视,口红,PS5,苹果手机,小米盒子"
+  business-date: 2020-12-18
+  is-clear: false
+  user-clear: false
+  new-user-count: 0
+  male-user-rate: 20
+  user-update-rate: 20
+  max-favorite-count: 100
+  favorite-cancel-rate: 10
+  cart-per-user-rate: 10
+  cart-max-sku-count: 8
+  cart-max-sku-number: 3
+  cart-source-type-rates: [60, 20, 10, 10]
+  order-user-rate: 30
+  order-sku-rate: 50
+  order-join-activity: false
+  order-use-coupon: false
+  order-back-reason-rates: [30, 10, 20, 5, 15, 5, 5]
+  get-coupon-user-count: 100
+  payment-rate: 70
+  payment-type-rates: [30, 60, 10]
+  comment-brand-rates: [30, 10, 10, 50]
+  collect-type: LOG
+  http-url: http://minikube:8888/report
+  max-device-id: 20
+  max-user-id: 50
+  max-sku-id: 10
+  max-page-duration: 20000
+  error-rate: 3
+  logs-interval: 100
+  sku-detail-source-type-rates: [40, 25, 15, 20]
+  user-get-coupon-rate: 75
+  max-coupon-id: 3
+  search-keywords: [图书, 小米, iphone11, 电视, 口红, PS5, 苹果手机, 小米盒子]
