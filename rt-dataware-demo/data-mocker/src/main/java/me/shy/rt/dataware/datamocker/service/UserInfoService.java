@@ -10,8 +10,11 @@ package me.shy.rt.dataware.datamocker.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import org.springframework.stereotype.Service;
+
 import me.shy.rt.dataware.datamocker.bean.UserInfo;
 
+@Service
 public interface UserInfoService extends IService<UserInfo> {
     public void  genUserInfos(Boolean isClear);
 }

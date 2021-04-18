@@ -34,7 +34,7 @@ public class CouponInfo implements Serializable {
     /** 满额数 */
     private BigDecimal conditionAmount;
     /** 满件数 */
-    private Long conditionNum;
+    private Long conditionNumber;
     /** 活动编号 */
     private Long activityId;
     /** 减金额 */
@@ -46,7 +46,7 @@ public class CouponInfo implements Serializable {
     /** 范围类型，1：商品，2：品类，3：品牌 */
     private String rangeType;
     /** 最多领用次数 */
-    private Integer limitNum;
+    private Integer limitNumber;
     /** 修改时间 */
     private LocalDateTime operateTime;
     /** 过期时间 */

@@ -24,7 +24,7 @@ import me.shy.rt.dataware.datamocker.enums.Page;
 @AllArgsConstructor
 public class AppPageLog {
     /** 上一次的访问页面 */
-    private Page lastPageId;
+    private Page lastPage;
     /** 当前正在访问的页面 */
     private Page page;
     /** 行为操作对象类型 */
@@ -40,28 +40,29 @@ public class AppPageLog {
     /** 预留字段2 */
     private String extend2;
 
-    public static AppPageLog newInstance(Page pageId, Page lastPageId, Integer duration) {
+    public static AppPageLog newInstance(DataMockerConfig c, Page page, Page lastPage, Integer duration) {
         AppPageLog s = new AppPageLog();
-        s.lastPageId = lastPageId;
+        s.page = page;
+        s.lastPage = lastPage;
         s.duration = duration;
 
-        if (pageId == Page.GOODS_LIST) {
+        if (page == Page.GOODS_LIST) {
             s.itemType = ItemType.KEYWORD;
-            s.item = new RandomWeightOption<String>(DataMockerConfig.searchKeywords).nextPayload();
-        } else if (pageId == Page.TRADE || pageId == Page.PAYMENT || pageId == Page.PAYMENT_DONE) {
+            s.item = new RandomWeightOption<String>(c.searchKeywords).nextPayload();
+        } else if (page == Page.TRADE || page == Page.PAYMENT || page == Page.PAYMENT_DONE) {
             s.itemType = ItemType.SKU_IDS;
-            s.item = RandomNumeric.nextString(1, DataMockerConfig.maxSkuId, RandomNumeric.nextInteger(1, 3), ",",
+            s.item = RandomNumeric.nextString(1, c.maxSkuId, RandomNumeric.nextInteger(1, 3), ",",
                     false);
-        } else if (pageId == Page.GOODS_DETAIL || pageId == Page.GOODS_SPEC || pageId == Page.COMMENT
-                || pageId == Page.COMMENT_LIST) {
-            Integer[] sourceTypeRates = DataMockerConfig.skuDetailSourceTypeRates;
+        } else if (page == Page.GOODS_DETAIL || page == Page.GOODS_SPEC || page == Page.COMMENT
+                || page == Page.COMMENT_LIST) {
+            Integer[] sourceTypeRates = c.skuDetailSourceTypeRates;
             RandomWeightOption<DisplayType> sourceTypeOptionGroup = RandomWeightOption.<DisplayType>builder()
                     .add(DisplayType.QUERY, sourceTypeRates[0]).add(DisplayType.PROMOTION, sourceTypeRates[1])
                     .add(DisplayType.RECOMMEND, sourceTypeRates[2]).add(DisplayType.ACTIVITY, sourceTypeRates[3])
                     .build();
             s.sourceType = sourceTypeOptionGroup.nextPayload();
             s.itemType = ItemType.SKU_ID;
-            s.item = RandomNumeric.nextInteger(0, DataMockerConfig.maxSkuId) + "";
+            s.item = RandomNumeric.nextInteger(0, c.maxSkuId) + "";
         }
 
         return s;

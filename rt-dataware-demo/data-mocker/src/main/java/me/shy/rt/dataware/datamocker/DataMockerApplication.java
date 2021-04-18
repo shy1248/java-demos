@@ -13,7 +13,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class DataMockerApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(DataMockerApplication.class, args);
     }

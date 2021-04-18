@@ -10,8 +10,8 @@ package me.shy.rt.dataware.datamocker.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import me.shy.rt.dataware.datamocker.bean.OrderBack;
+import me.shy.rt.dataware.datamocker.bean.OrderBackInfo;
 
-public interface OrderBackService extends IService<OrderBack> {
+public interface OrderBackService extends IService<OrderBackInfo> {
     public void  genRefundsOrFinish(Boolean isClear);
 }

@@ -9,11 +9,13 @@
 package me.shy.rt.dataware.datamocker.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.stereotype.Service;
 
 import me.shy.rt.dataware.datamocker.bean.ActivityRule;
 import me.shy.rt.dataware.datamocker.mapper.ActivityRuleMapper;
 import me.shy.rt.dataware.datamocker.service.ActivityRuleService;
 
+@Service
 public class ActivityRuleServiceImpl extends ServiceImpl<ActivityRuleMapper, ActivityRule>
         implements ActivityRuleService {
 }

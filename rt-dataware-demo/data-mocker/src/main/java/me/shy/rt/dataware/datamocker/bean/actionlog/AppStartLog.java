@@ -36,7 +36,7 @@ public class AppStartLog {
         s.startTypeEntry = new RandomWeightOption<String>(new WeightOption<String>("install", 5),
                 new WeightOption<String>("icon", 70), new WeightOption<String>("notice", 20)).nextPayload();
         s.openScreenAdId = RandomNumeric.nextInteger(0, 20) + 0L;
-        s.openScreenAdTime = RandomNumeric.nextInteger(1000, 5000);
+        s.openScreenAdTime = RandomNumeric.nextInteger(2000, 5000);
         s.openScreenAdSkipped = RandomWeightOption.<Integer>builder().add(0, 50)
                 .add(RandomNumeric.nextInteger(1000, s.openScreenAdTime), 50).build().nextPayload();
         s.loadingTime = RandomNumeric.nextInteger(1000, 20000);

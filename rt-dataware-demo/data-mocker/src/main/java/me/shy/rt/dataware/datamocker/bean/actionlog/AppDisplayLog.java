@@ -37,14 +37,14 @@ public class AppDisplayLog {
     /** 位置 id */
     private Integer positionId;
 
-    public static List<AppDisplayLog> batchInstances(AppPageLog appPage) {
+    public static List<AppDisplayLog> batchInstances(DataMockerConfig c, AppPageLog appPage) {
         List<AppDisplayLog> displayLogs = new ArrayList<>();
         if (appPage.getPage() == Page.HOME || appPage.getPage() == Page.DISCOVERY
                 || appPage.getPage() == Page.CATEGORY) {
-            int displayCount = RandomNumeric.nextInteger(1, DataMockerConfig.maxDisplayCount);
-            int positionId = RandomNumeric.nextInteger(1, DataMockerConfig.maxPostionId);
+            int displayCount = RandomNumeric.nextInteger(1, c.maxDisplayCount);
+            int positionId = RandomNumeric.nextInteger(1, c.maxPostionId);
             for (int i = 0; i < displayCount; i++) {
-                String activityId = RandomNumeric.nextInteger(1, DataMockerConfig.maxActivityCount) + "";
+                String activityId = RandomNumeric.nextInteger(1, c.maxActivityCount) + "";
                 AppDisplayLog appDisplay = new AppDisplayLog(ItemType.ACTIVITY_ID, activityId, DisplayType.ACTIVITY, i, positionId);
                 displayLogs.add(appDisplay);
             }
@@ -57,11 +57,11 @@ public class AppDisplayLog {
                 || appPage.getPage() == Page.GOODS_SPEC // 商品规格
                 || appPage.getPage() == Page.GOODS_LIST // 商品列表
         ) {
-            int displayCount = RandomNumeric.nextInteger(DataMockerConfig.minDisplayCount,DataMockerConfig.maxDisplayCount);
+            int displayCount = RandomNumeric.nextInteger(c.minDisplayCount,c.maxDisplayCount);
             int activityCount = displayLogs.size(); // 商品显示从活动后面开始
             for (int i = 0; i < displayCount + activityCount; i++) {
-                String skuId = RandomNumeric.nextInteger(1, DataMockerConfig.maxSkuId) + "";
-                int positionId = RandomNumeric.nextInteger(1, DataMockerConfig.maxPostionId);
+                String skuId = RandomNumeric.nextInteger(1, c.maxSkuId) + "";
+                int positionId = RandomNumeric.nextInteger(1, c.maxPostionId);
                 DisplayType displayType = RandomWeightOption.<DisplayType>builder().add(DisplayType.PROMOTION, 30)
                         .add(DisplayType.QUERY, 60).add(DisplayType.RECOMMEND, 20).build().nextPayload();
                 AppDisplayLog appDisplay = new AppDisplayLog(ItemType.SKU_ID, skuId, displayType, i, positionId);

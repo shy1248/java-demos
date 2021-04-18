@@ -9,10 +9,12 @@
 package me.shy.rt.dataware.datamocker.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.stereotype.Service;
 
 import me.shy.rt.dataware.datamocker.bean.ActivitySku;
 import me.shy.rt.dataware.datamocker.mapper.ActivitySkuMapper;
 import me.shy.rt.dataware.datamocker.service.ActivitySkuService;
 
+@Service
 public class ActivitySkuServiceImpl extends ServiceImpl<ActivitySkuMapper, ActivitySku> implements ActivitySkuService {
 }

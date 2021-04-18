@@ -40,7 +40,7 @@ public class OrderDetail implements Serializable {
     /** 购买价格(下单时sku价格） */
     private BigDecimal orderPrice;
     /** 购买个数 */
-    private Long skuNum;
+    private Long skuNumber;
     /** 创建时间 */
     private LocalDateTime createTime;
     /** 分摊的总金额 */

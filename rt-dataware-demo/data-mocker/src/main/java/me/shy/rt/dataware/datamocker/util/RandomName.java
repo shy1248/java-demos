@@ -46,7 +46,7 @@ public class RandomName {
         }
         int nameLenth = RandomNumeric.nextInteger(1, 2);
         int index = RandomNumeric.nextInteger(0, nameStringLength - nameLenth);
-        return nameString.substring(index, nameLenth);
+        return nameString.substring(index, index + nameLenth);
     }
 
     public static String getNickName(@NonNull String gender, @NonNull String lastName) {

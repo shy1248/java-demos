@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import javax.validation.constraints.NotEmpty;
+
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -18,7 +20,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import me.shy.rt.dataware.datamocker.config.DataMockerConfig;
 
 @Slf4j
 public class HttpUtil {
@@ -38,8 +39,7 @@ public class HttpUtil {
         return CLIENT;
     }
 
-    public static boolean get(String param) {
-        String url = DataMockerConfig.httpUrl;
+    public static boolean get(@NotEmpty String url, String param) {
         if (null != param && !"".equals(param.trim())) {
             url = url + "?" + param;
         }
@@ -59,8 +59,7 @@ public class HttpUtil {
         return false;
     }
 
-    public static boolean post(String param, String body) {
-        String url = DataMockerConfig.httpUrl;
+    public static boolean post(@NotEmpty String url, String param, String body) {
         if (null != param && !"".equals(param.trim())) {
             url = url + "?" + param;
         }

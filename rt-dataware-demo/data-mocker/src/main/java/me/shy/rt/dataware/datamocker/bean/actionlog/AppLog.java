@@ -43,9 +43,10 @@ public class AppLog {
     }
 
     public static class AppLogBuilder {
-        public void nextError() {
-            boolean isError = RandomWeightOption.<Boolean>builder().add(true, DataMockerConfig.errorRate)
-                    .add(false, 100 - DataMockerConfig.errorRate).build().nextPayload();
+
+        public void nextError(DataMockerConfig c) {
+            boolean isError = RandomWeightOption.<Boolean>builder().add(true, c.errorsTriggeredRate)
+                    .add(false, 100 - c.errorsTriggeredRate).build().nextPayload();
             if (isError) {
                 this.error = AppErrorLog.newInstance();
             }

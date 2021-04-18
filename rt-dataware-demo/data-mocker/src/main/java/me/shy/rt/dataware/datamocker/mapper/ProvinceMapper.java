@@ -9,7 +9,10 @@ package me.shy.rt.dataware.datamocker.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import me.shy.rt.dataware.datamocker.bean.Province;
 
+@Mapper
 public interface ProvinceMapper extends BaseMapper<Province> {
 }

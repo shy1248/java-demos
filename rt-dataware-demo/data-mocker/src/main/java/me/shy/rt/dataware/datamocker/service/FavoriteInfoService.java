@@ -13,5 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import me.shy.rt.dataware.datamocker.bean.FavoriteInfo;
 
 public interface FavoriteInfoService extends IService<FavoriteInfo> {
-    public void  genFavors(Boolean isClear);
+    public void  genFavoriteSkus(Boolean isClear);
 }

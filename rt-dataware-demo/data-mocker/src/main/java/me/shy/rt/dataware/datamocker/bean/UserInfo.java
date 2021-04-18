@@ -9,6 +9,7 @@
 package me.shy.rt.dataware.datamocker.bean;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -43,7 +44,7 @@ public class UserInfo implements Serializable {
     /** 用户级别 */
     private String userLevel;
     /** 用户生日 */
-    private LocalDateTime birthday;
+    private LocalDate birthday;
     /** 性别 M男,F女 */
     private String gender;
     /** 创建时间 */

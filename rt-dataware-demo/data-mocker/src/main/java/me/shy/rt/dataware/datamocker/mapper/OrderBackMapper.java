@@ -9,8 +9,10 @@
 package me.shy.rt.dataware.datamocker.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
-import me.shy.rt.dataware.datamocker.bean.OrderBack;
+import me.shy.rt.dataware.datamocker.bean.OrderBackInfo;
 
-public interface OrderBackMapper extends BaseMapper<OrderBack> {
+@Mapper
+public interface OrderBackMapper extends BaseMapper<OrderBackInfo> {
 }

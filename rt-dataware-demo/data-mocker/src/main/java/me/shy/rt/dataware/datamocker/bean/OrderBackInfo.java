@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderBack implements Serializable {
+public class OrderBackInfo implements Serializable {
     private static final long serialVersionUID = 5910501547106970685L;
 
     /** 编号 */

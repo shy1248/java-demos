@@ -13,5 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import me.shy.rt.dataware.datamocker.bean.CartInfo;
 
 public interface CartInfoService extends IService<CartInfo> {
-    public void  genCartInfo(boolean ifClear);
+    public void  genCartInfo(boolean isClear);
 }

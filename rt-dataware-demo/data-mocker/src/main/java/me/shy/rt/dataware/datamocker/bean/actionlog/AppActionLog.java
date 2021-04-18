@@ -45,26 +45,26 @@ public class AppActionLog {
         this.item = item;
     }
 
-    public static List<AppActionLog> batchInstances(AppPageLog appPage, Long timestamp, Integer duration) {
-        AppActionLog action = null;
+    public static List<AppActionLog> batchInstances(DataMockerConfig c, AppPageLog appPage, Long timestamp, Integer duration) {
+        AppActionLog action = new AppActionLog();
         List<AppActionLog> actions = new ArrayList<>();
 
-        Boolean isFavorite = RandomWeightOption.<Boolean>builder().add(true, DataMockerConfig.favoriteRate)
-                .add(false, 100 - DataMockerConfig.favoriteRate).build().nextPayload();
-        Boolean isInCart = RandomWeightOption.<Boolean>builder().add(true, DataMockerConfig.inCartRate)
-                .add(false, 100 - DataMockerConfig.inCartRate).build().nextPayload();
-        Boolean isCartAddNum = RandomWeightOption.<Boolean>builder().add(true, DataMockerConfig.cartAddNumberRate)
-                .add(false, 100 - DataMockerConfig.cartAddNumberRate).build().nextPayload();
-        Boolean isCartMinusNum = RandomWeightOption.<Boolean>builder().add(true, DataMockerConfig.cartMinusNumberRate)
-                .add(false, 100 - DataMockerConfig.cartMinusNumberRate).build().nextPayload();
-        Boolean isCartRemove = RandomWeightOption.<Boolean>builder().add(true, DataMockerConfig.cartRemoveRate)
-                .add(false, 100 - DataMockerConfig.cartRemoveRate).build().nextPayload();
-        Boolean isGetCoupon = RandomWeightOption.<Boolean>builder().add(true, DataMockerConfig.userGetCouponRate)
-                .add(false, 100 - DataMockerConfig.userGetCouponRate).build().nextPayload();
-        Boolean isAddAddress = RandomWeightOption.<Boolean>builder().add(true, DataMockerConfig.newReceviedAddressRate)
-                .add(false, 100 - DataMockerConfig.newReceviedAddressRate).build().nextPayload();
-        Boolean isFavoriteCancel = RandomWeightOption.<Boolean>builder().add(true, DataMockerConfig.favoriteCancelRate)
-                .add(false, 100 - DataMockerConfig.favoriteCancelRate).build().nextPayload();
+        Boolean isFavorite = RandomWeightOption.<Boolean>builder().add(true, c.favoritedRate)
+                .add(false, 100 - c.favoritedRate).build().nextPayload();
+        Boolean isInCart = RandomWeightOption.<Boolean>builder().add(true, c.perUserInCartRate).add(false, 100 - c.perUserInCartRate)
+                .build().nextPayload();
+        Boolean isCartAddNum = RandomWeightOption.<Boolean>builder().add(true, c.addSkuNumberInCartRate)
+                .add(false, 100 - c.addSkuNumberInCartRate).build().nextPayload();
+        Boolean isCartMinusNum = RandomWeightOption.<Boolean>builder().add(true, c.minusSkuNumberInCartRate)
+                .add(false, 100 - c.minusSkuNumberInCartRate).build().nextPayload();
+        Boolean isCartRemove = RandomWeightOption.<Boolean>builder().add(true, c.removedSkuFromCartRate)
+                .add(false, 100 - c.removedSkuFromCartRate).build().nextPayload();
+        Boolean isGotCoupon = RandomWeightOption.<Boolean>builder().add(true, c.gotCouponUserRate)
+                .add(false, 100 - c.gotCouponUserRate).build().nextPayload();
+        Boolean isAddAddress = RandomWeightOption.<Boolean>builder().add(true, c.newDeliveryAddressRate)
+                .add(false, 100 - c.newDeliveryAddressRate).build().nextPayload();
+        Boolean isFavoriteCancel = RandomWeightOption.<Boolean>builder().add(true, c.cancelFavoritedRate)
+                .add(false, 100 - c.cancelFavoritedRate).build().nextPayload();
 
         if (appPage.getPage() == Page.GOODS_DETAIL) {
             if (isFavorite) {
@@ -75,8 +75,8 @@ public class AppActionLog {
                 action = new AppActionLog(ActionType.CART_ADD, appPage.getItemType(), appPage.getItem());
                 actions.add(action);
             }
-            if (isGetCoupon) {
-                int couponId = RandomNumeric.nextInteger(1, DataMockerConfig.maxCouponId);
+            if (isGotCoupon) {
+                int couponId = RandomNumeric.nextInteger(1, c.maxCouponId);
                 action = new AppActionLog(ActionType.GET_COUPON, ItemType.COUPON_ID, String.valueOf(couponId));
                 actions.add(action);
             }
@@ -84,17 +84,17 @@ public class AppActionLog {
         } else if (appPage.getPage() == Page.CART) {
 
             if (isCartAddNum) {
-                String skuId = RandomNumeric.nextInteger(1, DataMockerConfig.maxSkuId) + "";
+                String skuId = RandomNumeric.nextInteger(1, c.maxSkuId) + "";
                 action = new AppActionLog(ActionType.CART_ADD_NUM, ItemType.SKU_ID, skuId);
                 actions.add(action);
             }
             if (isCartMinusNum) {
-                String skuId = RandomNumeric.nextInteger(1, DataMockerConfig.maxSkuId) + "";
+                String skuId = RandomNumeric.nextInteger(1, c.maxSkuId) + "";
                 action = new AppActionLog(ActionType.CART_MINUS_NUM, ItemType.SKU_ID, skuId);
                 actions.add(action);
             }
             if (isCartRemove) {
-                String skuId = RandomNumeric.nextInteger(1, DataMockerConfig.maxSkuId) + "";
+                String skuId = RandomNumeric.nextInteger(1, c.maxSkuId) + "";
                 action = new AppActionLog(ActionType.CART_REMOVE, ItemType.SKU_ID, skuId);
                 actions.add(action);
             }
@@ -106,7 +106,7 @@ public class AppActionLog {
             }
 
         } else if (appPage.getPage() == Page.FAVORITE) {
-            int skuId = RandomNumeric.nextInteger(1, DataMockerConfig.maxSkuId);
+            int skuId = RandomNumeric.nextInteger(1, c.maxSkuId);
             for (int i = 0; i < 3; i++) {
                 if (isFavoriteCancel) {
                     action = new AppActionLog(ActionType.FAVORITE_CANEL, ItemType.SKU_ID, skuId + i + "");

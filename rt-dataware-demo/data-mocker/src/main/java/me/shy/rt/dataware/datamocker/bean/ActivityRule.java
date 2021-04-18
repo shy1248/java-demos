@@ -28,7 +28,7 @@ public class ActivityRule implements Serializable {
     /** 满减金额 */
     private BigDecimal conditionAmount;
     /** 满减件数 */
-    private Long conditionNum;
+    private Long conditionNumber;
     /** 优惠金额 */
     private BigDecimal benefitAmount;
     /** 优惠折扣 */
