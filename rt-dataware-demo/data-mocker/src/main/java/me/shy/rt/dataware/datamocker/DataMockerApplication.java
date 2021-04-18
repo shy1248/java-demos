@@ -3,7 +3,7 @@
  * @Author      : shy
  * @Email       : yushuibo@ebupt.com / hengchen2005@gmail.com
  * @Version     : v1.0
- * @Description : -
+ * @Description : 数据模拟器
  */
 
 package me.shy.rt.dataware.datamocker;
