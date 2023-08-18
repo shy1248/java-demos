@@ -13,5 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import me.shy.rt.dataware.datamocker.bean.CommentInfo;
 
 public interface CommentInfoService extends IService<CommentInfo> {
-    public  void genComments(Boolean ifClear);
+    public  void genComments(Boolean isClear);
 }

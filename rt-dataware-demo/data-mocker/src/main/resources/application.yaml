@@ -2,14 +2,23 @@ logging:
   pattern:
     console: \%m\%n
   level:
-    root: debug
+    root: info
 
 spring:
   main:
     banner-mode: off
+  task:
+    execution:
+      thread-name-prefix: AppLogMocker-
+      pool:
+        max-size: 100
+        core-size: 20
+        keep-alive: 180s
+        queue-capacity: 5000
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://minikube:3306/rt-dataware-demo?characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    # driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://minikube:3306/demo?characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
     username: demo
     password: 123456
   kafka:
@@ -30,35 +39,36 @@ mybatis-plus:
 
 mocker:
   business-date: 2020-12-18
+  app-client-concurrence: 10
+  collect-type: LOG
   is-clear: false
-  user-clear: false
-  new-user-count: 0
+  user-logon-count: 50
   male-user-rate: 20
-  user-update-rate: 20
-  max-favorite-count: 100
-  favorite-cancel-rate: 10
-  cart-per-user-rate: 10
-  cart-max-sku-count: 8
-  cart-max-sku-number: 3
-  cart-source-type-rates: [60, 20, 10, 10]
-  order-user-rate: 30
-  order-sku-rate: 50
+  user-info-update-rate: 20
+  total-favorite-count: 100
+  cancel-favorited-rate: 10
+  per-user-in-cart-rate: 10
+  max-sku-type-in-cart: 8
+  max-sku-number-in-cart: 3
+  source-type-of-in-cart-rates: [60, 20, 10, 10]
+  per-user-ordered-rate: 30
+  per-sku-ordered-rate: 50
   order-join-activity: false
-  order-use-coupon: false
+  order-used-coupon: false
+  got-coupon-user-rate: 75
+  users-count-of-got-coupon: 100
+  order-back-rate: 30
   order-back-reason-rates: [30, 10, 20, 5, 15, 5, 5]
-  get-coupon-user-count: 100
   payment-rate: 70
   payment-type-rates: [30, 60, 10]
-  comment-brand-rates: [30, 10, 10, 50]
-  collect-type: LOG
+  comment-grade-rates: [30, 10, 10, 50]
   http-url: http://minikube:8888/report
   max-device-id: 20
   max-user-id: 50
   max-sku-id: 10
   max-page-duration: 20000
-  error-rate: 3
-  logs-interval: 100
+  errors-triggered-rate: 3
+  max-logs-interval: 1000
   sku-detail-source-type-rates: [40, 25, 15, 20]
-  user-get-coupon-rate: 75
   max-coupon-id: 3
   search-keywords: [图书, 小米, iphone11, 电视, 口红, PS5, 苹果手机, 小米盒子]

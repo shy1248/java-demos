@@ -17,12 +17,14 @@ import me.shy.rt.dataware.datamocker.util.RandomNumeric;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AppError {
+public class AppErrorLog {
+    /** 错误状态码 */
     private int errorCode;
+    /** 错误信息 */
     private String message;
 
-    public static AppError newInstance() {
-        return new AppError(RandomNumeric.nextInteger(1001, 4001),
+    public static AppErrorLog newInstance() {
+        return new AppErrorLog(RandomNumeric.nextInteger(1001, 4001),
                 "Exception in thread \\  java.net.SocketTimeoutException\\n \\tat me.shy.realtime.dataware.malldatamocker.logmocker.bean.AppError.main(AppError.java: A mocker exception");
     }
 }

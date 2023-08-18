@@ -10,10 +10,13 @@ package me.shy.rt.dataware.datamocker.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import org.springframework.stereotype.Service;
+
 import me.shy.rt.dataware.datamocker.bean.OrderDetailCoupon;
 import me.shy.rt.dataware.datamocker.mapper.OrderDetailCouponMapper;
 import me.shy.rt.dataware.datamocker.service.OrderDetailCouponService;
 
+@Service
 public class OrderDetailCouponServiceImpl extends ServiceImpl<OrderDetailCouponMapper, OrderDetailCoupon>
         implements OrderDetailCouponService {
 }

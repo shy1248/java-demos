@@ -42,13 +42,13 @@ public class Constant {
     public static final String PAYMENT_TYPE_UNION = "1103";
 
     /** 商品评价：好评 */
-    public static final String APPRAISE_GOOD = "1201";
+    public static final String COMMENT_GRADE_GOOD = "1201";
     /** 商品评价：中评 */
-    public static final String APPRAISE_SOSO = "1202";
+    public static final String COMMENT_GRADE_SOSO = "1202";
     /** 商品评价：差评 */
-    public static final String APPRAISE_BAD = "1203";
+    public static final String COMMENT_GRADE_BAD = "1203";
     /** 商品评价：自动 */
-    public static final String APPRAISE_AUTO = "1204";
+    public static final String COMMENT_GRADE_AUTO = "1204";
 
     /** 退货原因类别：质量问题 */
     public static final String BACK_REASON_BAD_GOODS = "1301";

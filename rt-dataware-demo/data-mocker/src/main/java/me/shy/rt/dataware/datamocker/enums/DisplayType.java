@@ -3,7 +3,7 @@
  * @Author      : shy
  * @Email       : yushuibo@ebupt.com / hengchen2005@gmail.com
  * @Version     : v1.0
- * @Description : App 曝光方式
+ * @Description : App 商品曝光类型
  */
 package me.shy.rt.dataware.datamocker.enums;
 

@@ -36,6 +36,8 @@
     </dependencies>
     <modules>
         <module>data-mocker</module>
+        <module>log-connector</module>
+        <module>rt-dataware</module>
     </modules>
 
     <build>

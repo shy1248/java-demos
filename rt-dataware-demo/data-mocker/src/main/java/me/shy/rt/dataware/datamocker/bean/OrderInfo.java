@@ -91,7 +91,7 @@ public class OrderInfo implements Serializable {
             BigDecimal couponReduceAmount = orderDetail.getSplitCouponAmount() == null ? BigDecimal.ZERO
                     : orderDetail.getSplitCouponAmount();
 
-            BigDecimal splitTotalamount = orderDetail.getOrderPrice().multiply(new BigDecimal(orderDetail.getSkuNum()));
+            BigDecimal splitTotalamount = orderDetail.getOrderPrice().multiply(new BigDecimal(orderDetail.getSkuNumber()));
             splitTotalamount = splitTotalamount.subtract(splitActivityAmount).subtract(couponReduceAmount);
             orderDetail.setSplitTotalAmount(splitTotalamount);
             totalAmount = totalAmount.add(splitTotalamount);
@@ -119,7 +119,7 @@ public class OrderInfo implements Serializable {
     public Long getTotalSkuNum() {
         Long totalNum = 0L;
         for (OrderDetail orderDetail : orderDetailList) {
-            totalNum += orderDetail.getSkuNum();
+            totalNum += orderDetail.getSkuNumber();
         }
         return totalNum;
     }

@@ -11,15 +11,22 @@ package me.shy.rt.dataware.datamocker.service.impl;
 import java.util.List;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.stereotype.Service;
 
 import me.shy.rt.dataware.datamocker.bean.SkuInfo;
 import me.shy.rt.dataware.datamocker.mapper.SkuInfoMapper;
 import me.shy.rt.dataware.datamocker.service.SkuInfoService;
 
+@Service
 public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> implements SkuInfoService {
 
     @Override
     public SkuInfo getSkuInfoById(List<SkuInfo> skuInfoList, Long skuId) {
+        for (SkuInfo skuInfo : skuInfoList) {
+            if (skuInfo.getId().equals(skuId)) {
+                return skuInfo;
+            }
+        }
         return null;
     }
 }

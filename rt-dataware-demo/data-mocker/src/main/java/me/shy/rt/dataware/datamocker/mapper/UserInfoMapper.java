@@ -10,7 +10,14 @@ package me.shy.rt.dataware.datamocker.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Update;
+
 import me.shy.rt.dataware.datamocker.bean.UserInfo;
 
+@Mapper
 public interface UserInfoMapper extends BaseMapper<UserInfo> {
+
+    @Update("truncate table user_info")
+    public void truncate();
 }

@@ -35,7 +35,7 @@ public class CartInfo implements Serializable {
     /** 放入购物车时价格 */
     private BigDecimal cartPrice;
     /** 数量 */
-    private Long skuNum;
+    private Long skuNumber;
     /** 图片文件 */
     private String imgUrl;
     /** sku名称，冗余 */

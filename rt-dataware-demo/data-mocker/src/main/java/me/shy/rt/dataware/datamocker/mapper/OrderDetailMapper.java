@@ -10,7 +10,10 @@ package me.shy.rt.dataware.datamocker.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import me.shy.rt.dataware.datamocker.bean.OrderDetail;
 
+@Mapper
 public interface OrderDetailMapper extends BaseMapper<OrderDetail> {
 }

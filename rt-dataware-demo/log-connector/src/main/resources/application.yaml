@@ -1,0 +1,8 @@
+spring:
+  kafka:
+    producer:
+      acks: 0
+    bootstrap-servers:
+    - minikube:9092
+    consumer:
+      group-id: rt-dataware-demo

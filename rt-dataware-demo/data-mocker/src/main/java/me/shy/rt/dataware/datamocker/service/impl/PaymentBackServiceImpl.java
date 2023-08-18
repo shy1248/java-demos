@@ -10,9 +10,12 @@ package me.shy.rt.dataware.datamocker.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import org.springframework.stereotype.Service;
+
 import me.shy.rt.dataware.datamocker.bean.PaymentBack;
 import me.shy.rt.dataware.datamocker.mapper.PaymentBackMapper;
 import me.shy.rt.dataware.datamocker.service.PaymentBackService;
 
+@Service
 public class PaymentBackServiceImpl extends ServiceImpl<PaymentBackMapper, PaymentBack> implements PaymentBackService {
 }

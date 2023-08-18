@@ -10,7 +10,7 @@ package me.shy.rt.dataware.datamocker.enums;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum PageId {
+public enum Page {
     HOME("首页"), CATEGORY("分类页"), DISCOVERY("发现页"), TOP_N("热门排行"), FAVORITE("收藏页"), SEARCH("搜索页"), GOODS_LIST("商品列表页"),
     GOODS_DETAIL("商品详情"), GOODS_SPEC("商品规格"), COMMENT("评价"), COMMENT_DONE("评价完成"), COMMENT_LIST("评价列表"), CART("购物车"),
     TRADE("下单结算"), PAYMENT("支付页面"), PAYMENT_DONE("支付完成"), ORDERS_ALL("全部订单"), ORDERS_UNPAID("订单待支付"),

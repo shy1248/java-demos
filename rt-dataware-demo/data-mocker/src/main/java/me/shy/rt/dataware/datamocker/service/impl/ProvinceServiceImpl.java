@@ -9,10 +9,12 @@
 package me.shy.rt.dataware.datamocker.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.stereotype.Service;
 
 import me.shy.rt.dataware.datamocker.bean.Province;
 import me.shy.rt.dataware.datamocker.mapper.ProvinceMapper;
 import me.shy.rt.dataware.datamocker.service.ProvinceService;
 
+@Service
 public class ProvinceServiceImpl extends ServiceImpl<ProvinceMapper, Province> implements ProvinceService {
 }
